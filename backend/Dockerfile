@@ -11,9 +11,9 @@ RUN go install github.com/cosmtrek/air@latest
 
 COPY ./backend .
 
-CMD ["go", "run", "./src"]
+#CMD ["go", "run", "./src"]
 
-#CMD ["air", "-c", ".air.toml"]
+CMD ["air", "-c", ".air.toml"]
 
 
 
