@@ -1,5 +1,5 @@
 以下を順に実行
-```
+```sh
 docker compose build
 
 docker compose run --rm backend sh
