@@ -15,6 +15,15 @@ services:
       POSTGRES_DB: hato
     networks:
       - lesson
+  
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: hato
+      POSTGRES_PASSWORD: hato72
+      POSTGRES_DB: hato
+    networks:
+      - lesson
 
 networks:
   lesson:

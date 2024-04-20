@@ -37,5 +37,5 @@ func main() {
 	//e := router.NewRouter(userController, taskController)
 	e := router.NewRouter(userController)
 	e.Logger.Fatal(e.Start(":8080")) //サーバー起動
-	//docker,pgAdminを起動->docker compose up -d -> bashでGO_ENV=dev go run main.go
+	//docker,pgAdminを起動->docker compose up -> bashでGO_ENV=dev go run backend/src/main.go
 }
