@@ -7,13 +7,13 @@ COPY backend/go.mod .
 
 RUN apk upgrade --update && apk --no-cache add git gcc musl-dev
 
-RUN go install github.com/cosmtrek/air@latest
+#RUN go install github.com/cosmtrek/air@latest
 
 COPY ./backend .
 
-#CMD ["go", "run", "./src"]
+CMD ["go", "run", "./src"]
 
-CMD ["air", "-c", ".air.toml"]
+#CMD ["air", "-c", ".air.toml"]
 
 
 
