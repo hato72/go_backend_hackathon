@@ -2,11 +2,11 @@
 ```sh
 docker compose build
 
-docker compose run --rm backend sh
+//docker compose run --rm backend sh
 
 //go get github.com/labstack/echo/v4
 
-go mod tidy 
+//go mod tidy 
 
 docker compose up 
 ```
