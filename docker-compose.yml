@@ -9,3 +9,19 @@ services:
       - 8080:8080
     volumes:
       - ./backend:/app
+    networks:
+      - lesson
+
+  db:
+    image: postgres:latest
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: hato
+      POSTGRES_PASSWORD: hato72
+      POSTGRES_DB: hato
+    networks:
+      - lesson
+
+networks:
+  lesson: {}
