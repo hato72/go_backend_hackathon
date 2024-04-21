@@ -35,6 +35,7 @@ API_DOMAIN=
 docker compose run --rm backend sh
 
 GO_ENV=dev go run src/migrate/migrate.go
+```
 
 #### メモ
 dbイメージ　postgres latest 
