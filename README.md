@@ -1,4 +1,4 @@
-### 実行
+## 実行
 ```sh
 docker compose build
 
@@ -11,10 +11,10 @@ docker compose build
 docker compose up 
 ```
 
-### DB設計
+## DB設計
 https://free-casquette-dee.notion.site/d558148d80f742a4ac77c0bf76b4a2c9?pvs=4
 
-### migrate
+## migrate
 ```sh
 .env.dev:
 
@@ -37,7 +37,7 @@ docker compose run --rm backend sh
 GO_ENV=dev go run src/migrate/migrate.go
 ```
 
-#### メモ
+## メモ
 dbイメージ　postgres latest 
 
 プログラムイメージ　hackathon-backend latest
