@@ -13,4 +13,4 @@ func main() {
 	dbConn.AutoMigrate(&model.User{})
 }
 
-//GO_ENV=dev go run backend/src/migrate/migrate.go
+//GO_ENV=dev go run src/migrate/migrate.go
