@@ -8,6 +8,7 @@ require (
 	github.com/joho/godotenv v1.5.1
 	github.com/labstack/echo-jwt/v4 v4.2.0
 	github.com/labstack/echo/v4 v4.12.0
+	github.com/lib/pq v1.10.9
 	golang.org/x/crypto v0.22.0
 	gorm.io/driver/postgres v1.5.7
 	gorm.io/gorm v1.25.9
