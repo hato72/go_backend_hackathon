@@ -42,5 +42,5 @@ dbイメージ　postgres latest
 
 プログラムイメージ　hackathon-backend latest
 
-イメージを消しながらコンテナを停止：
+Docker Composeで作ったコンテナ、イメージ、ボリューム、ネットワークを一括削除：
 docker-compose down -v --rmi local
