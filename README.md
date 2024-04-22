@@ -1,10 +1,8 @@
-## 実行
+## 基本実行方法
 ```sh
 docker compose build
 
 //docker compose run --rm backend sh
-
-//go get github.com/labstack/echo/v4
 
 //go mod tidy 
 
