@@ -40,7 +40,7 @@ GO_ENV=dev go run src/migrate/migrate.go
 ## メモ
 dbイメージ　postgres latest 
 
-プログラムイメージ　hackathon-backend latest
+バックエンドイメージ　hackathon-backend latest
 
 Docker Composeで作ったコンテナ、イメージ、ボリューム、ネットワークを一括削除：
 docker-compose down -v --rmi local
