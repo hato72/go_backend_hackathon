@@ -29,9 +29,9 @@ GO_ENV=dev
 API_DOMAIN=
 ```
 
-```sh
 .env.devをbackendディレクトリ直下に配置
 
+```sh
 docker compose run --rm backend sh
 
 GO_ENV=dev go run src/migrate/migrate.go
