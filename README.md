@@ -29,7 +29,7 @@ GO_ENV=dev
 API_DOMAIN=
 ```
 
-.env.devをbackendディレクトリ直下に配置
+.env.devをbackendディレクトリ直下に配置した後に以下を実行
 
 ```sh
 docker compose run --rm backend sh
