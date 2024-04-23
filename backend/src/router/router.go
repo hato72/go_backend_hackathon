@@ -23,8 +23,8 @@ func NewRouter(uc controller.IUserController) *echo.Echo {
 		CookiePath:     "/",
 		CookieDomain:   os.Getenv("API_DOMAIN"),
 		CookieHTTPOnly: true,
-		CookieSameSite: http.SameSiteNoneMode,
-		//CookieSameSite: http.SameSiteDefaultMode, //postmanで確認のため
+		//CookieSameSite: http.SameSiteNoneMode,
+		CookieSameSite: http.SameSiteDefaultMode, //postmanで確認のため
 	}))
 	e.POST("/signup", uc.SignUp) //エンドポイント追加
 	e.POST("/login", uc.Login)

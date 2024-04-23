@@ -1,4 +1,4 @@
-## 基本実行方法
+<!-- ## 基本実行方法
 ```sh
 docker compose build
 
@@ -7,12 +7,14 @@ docker compose build
 //go mod tidy 
 
 docker compose up 
-```
+``` -->
 
 ## DB設計
 https://free-casquette-dee.notion.site/d558148d80f742a4ac77c0bf76b4a2c9?pvs=4
 
-## migrate
+
+## 実行方法
+
 ```sh
 .env.dev:
 
@@ -30,10 +32,18 @@ API_DOMAIN=
 .env.devをbackendディレクトリ直下に配置した後に以下を実行
 
 ```sh
+docker compose build
+
+docker compose up
+
 docker compose run --rm backend sh
 
-GO_ENV=dev go run src/migrate/migrate.go
+go run src/migrate/migrate.go
+
+go run src/main.go
+
 ```
+
 
 ## メモ
 dbイメージ　postgres latest 
@@ -42,3 +52,7 @@ dbイメージ　postgres latest
 
 Docker Composeで作ったコンテナ、イメージ、ボリューム、ネットワークを一括削除：
 docker-compose down -v --rmi local
+
+postmanで確認する際はrouter.goの26行目をコメントアウトして27行目のコメントアウトを外してから上記を実行
+
+missing csrf ~~ というエラーが出たらX-CSRF-TOKENを設定する
