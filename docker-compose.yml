@@ -9,3 +9,26 @@ services:
       - 8080:8080
     volumes:
       - ./backend:/app
+    # environment:
+    #   POSTGRES_USER: hato
+    #   POSTGRES_PASSWORD: hato72
+    #   POSTGRES_DB: hato
+    networks:
+      - lesson
+  
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: hato
+      POSTGRES_PASSWORD: hato72
+      POSTGRES_DB: hato
+      TZ: Asia/Tokyo
+    ports:
+      - 5434:5432
+    env_file:
+      - .env
+    networks:
+      - lesson
+
+networks:
+  lesson:

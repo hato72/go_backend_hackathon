@@ -10,7 +10,7 @@ import (
 	"github.com/labstack/echo/v4/middleware"
 )
 
-func NewRouter(uc controller.IUserController) *echo.Echo {
+func NewRouter(uc controller.IUserController, cc controller.ICuisineController) *echo.Echo {
 	e := echo.New()
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{ //corsのミドルウェア
 		AllowOrigins: []string{"http://localhost:3000", os.Getenv("FE_URL")}, //デプロイしたときに取得できるドメイン
@@ -23,22 +23,22 @@ func NewRouter(uc controller.IUserController) *echo.Echo {
 		CookiePath:     "/",
 		CookieDomain:   os.Getenv("API_DOMAIN"),
 		CookieHTTPOnly: true,
-		CookieSameSite: http.SameSiteNoneMode,
-		//CookieSameSite: http.SameSiteDefaultMode, //postmanで確認のため
+		//CookieSameSite: http.SameSiteNoneMode,
+		CookieSameSite: http.SameSiteDefaultMode, //postmanで確認のため
 	}))
 	e.POST("/signup", uc.SignUp) //エンドポイント追加
 	e.POST("/login", uc.Login)
 	e.POST("/logout", uc.Logout)
 	e.GET("/csrf", uc.CsrfToken)
-	t := e.Group("/tasks")
+	t := e.Group("/cuisines")
 	t.Use(echojwt.WithConfig(echojwt.Config{ //エンドポイントにミドルウェアを追加
 		SigningKey:  []byte(os.Getenv("SECRET")),
 		TokenLookup: "cookie:token",
 	}))
-	// t.GET("", tc.GetAllTasks)         //tasksのエンドポイントにリクエストがあった場合
-	// t.GET("/:taskId", tc.GetTaskById) //リクエストパラメーターにtaskidが入力された場合
-	// t.POST("", tc.CreateTask)
-	// t.PUT("/:taskId", tc.UpdateTask)
-	// t.DELETE("/:taskId", tc.DeleteTask)
+	t.GET("", cc.GetAllCuisines)            //tasksのエンドポイントにリクエストがあった場合
+	t.GET("/:cuisineId", cc.GetCuisineById) //リクエストパラメーターにtaskidが入力された場合
+	t.POST("", cc.CreateCuisine)
+	t.PUT("/:cuisineId", cc.UpdateCuisine)
+	t.DELETE("/:cuisineId", cc.DeleteCuisine)
 	return e
 }
