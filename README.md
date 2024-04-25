@@ -44,7 +44,11 @@ go run src/main.go
 
 ```
 -->
+```
+docker compose run --rm backend sh
 
+go run src/main.go
+```
 
 ## メモ
 dbイメージ　postgres latest 
