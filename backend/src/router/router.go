@@ -30,15 +30,17 @@ func NewRouter(uc controller.IUserController, cc controller.ICuisineController) 
 	e.POST("/login", uc.Login)
 	e.POST("/logout", uc.Logout)
 	e.GET("/csrf", uc.CsrfToken)
-	t := e.Group("/cuisines")
-	t.Use(echojwt.WithConfig(echojwt.Config{ //エンドポイントにミドルウェアを追加
+	c := e.Group("/cuisines")
+	c.Use(echojwt.WithConfig(echojwt.Config{ //エンドポイントにミドルウェアを追加
 		SigningKey:  []byte(os.Getenv("SECRET")),
 		TokenLookup: "cookie:token",
 	}))
-	t.GET("", cc.GetAllCuisines)            //tasksのエンドポイントにリクエストがあった場合
-	t.GET("/:cuisineId", cc.GetCuisineById) //リクエストパラメーターにtaskidが入力された場合
-	t.POST("", cc.CreateCuisine)
-	t.PUT("/:cuisineId", cc.UpdateCuisine)
-	t.DELETE("/:cuisineId", cc.DeleteCuisine)
+	c.GET("", cc.GetAllCuisines)            //cuisinesのエンドポイントにリクエストがあった場合
+	c.GET("/:cuisineId", cc.GetCuisineById) //リクエストパラメーターにcuisineidが入力された場合
+	c.POST("", cc.CreateCuisine)
+	c.PUT("/:cuisineId", cc.UpdateCuisine)
+	c.DELETE("/:cuisineId", cc.DeleteCuisine)
+
+	//c.POST("/image", cc.UploadImage)
 	return e
 }
