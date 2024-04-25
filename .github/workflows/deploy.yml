@@ -1,0 +1,26 @@
+name: Deploy 
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Docker Compose Build
+      run: docker compose build
+
+    - name: Docker Compose Up
+      run: docker compose up
+
+    - name: Migrate Database
+      run: docker-compose run --rm backend sh -c "go run src/migrate/migrate.go"
+
+    - name: Run Application
+      run: docker-compose run --rm backend sh -c "go run src/main.go"
