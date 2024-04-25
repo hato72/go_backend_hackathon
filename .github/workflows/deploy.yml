@@ -26,6 +26,17 @@ jobs:
         API_DOMAIN: ${{ secrets.API_DOMAIN }}
         FE_URL: ${{ secrets.FE_URL }}
       run: |
+        echo "PORT=${PORT}" >> /backend/.env.dev
+        echo "POSTGRES_USER=${POSTGRES_USER}" >> backend/.env.dev
+        echo "POSTGRES_PW=${POSTGRES_PW}" >> backend/.env.dev
+        echo "POSTGRES_DB=${POSTGRES_DB}" >> backend/.env.dev
+        echo "POSTGRES_PORT=${POSTGRES_PORT}" >> backend/.env.dev
+        echo "POSTGRES_HOST=${POSTGRES_HOST}" >> backend/.env.dev
+        echo "SECRET=${SECRET}" >> backend/.env.dev
+        echo "GO_ENV=${GO_ENV}" >> backend/.env.dev
+        echo "API_DOMAIN=${API_DOMAIN}" >> backend/.env.dev
+        echo "FE_URL=${FE_URL}" >> backend/.env.dev
+        
         echo "PORT=${PORT}" >> .env
         echo "POSTGRES_USER=${POSTGRES_USER}" >> .env
         echo "POSTGRES_PW=${POSTGRES_PW}" >> .env
@@ -36,17 +47,6 @@ jobs:
         echo "GO_ENV=${GO_ENV}" >> .env
         echo "API_DOMAIN=${API_DOMAIN}" >> .env
         echo "FE_URL=${FE_URL}" >> .env
-
-        echo "PORT=${PORT}" >> .env
-        echo "POSTGRES_USER=${POSTGRES_USER}" >> backend/.env.dev
-        echo "POSTGRES_PW=${POSTGRES_PW}" >> backend/.env.dev
-        echo "POSTGRES_DB=${POSTGRES_DB}" >> backend/.env.dev
-        echo "POSTGRES_PORT=${POSTGRES_PORT}" >> backend/.env.dev
-        echo "POSTGRES_HOST=${POSTGRES_HOST}" >> backend/.env.dev
-        echo "SECRET=${SECRET}" >> backend/.env.dev
-        echo "GO_ENV=${GO_ENV}" >> backend/.env.dev
-        echo "API_DOMAIN=${API_DOMAIN}" >> backend/.env.dev
-        echo "FE_URL=${FE_URL}" >> backend/.env.dev
 
     - name: Docker Compose Build
       run: docker compose build
