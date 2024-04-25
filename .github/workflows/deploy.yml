@@ -13,6 +13,41 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
+    - name: Set up environment variables
+      env:
+        PORT: ${{ secrets.PORT }}
+        POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+        POSTGRES_PW: ${{ secrets.POSTGRES_PW }}
+        POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+        POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
+        POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+        SECRET: ${{ secrets.SECRET }}
+        GO_ENV: ${{ secrets.GO_ENV }}
+        API_DOMAIN: ${{ secrets.API_DOMAIN }}
+        FE_URL: ${{ secrets.FE_URL }}
+      run: |
+        echo "PORT=${PORT}" >> .env
+        echo "POSTGRES_USER=${POSTGRES_USER}" >> .env
+        echo "POSTGRES_PW=${POSTGRES_PW}" >> .env
+        echo "POSTGRES_DB=${POSTGRES_DB}" >> .env
+        echo "POSTGRES_PORT=${POSTGRES_PORT}" >> .env
+        echo "POSTGRES_HOST=${POSTGRES_HOST}" >> .env
+        echo "SECRET=${SECRET}" >> .env
+        echo "GO_ENV=${GO_ENV}" >> .env
+        echo "API_DOMAIN=${API_DOMAIN}" >> .env
+        echo "FE_URL=${FE_URL}" >> .env
+
+        echo "PORT=${PORT}" >> .env
+        echo "POSTGRES_USER=${POSTGRES_USER}" >> backend/.env.dev
+        echo "POSTGRES_PW=${POSTGRES_PW}" >> backend/.env.dev
+        echo "POSTGRES_DB=${POSTGRES_DB}" >> backend/.env.dev
+        echo "POSTGRES_PORT=${POSTGRES_PORT}" >> backend/.env.dev
+        echo "POSTGRES_HOST=${POSTGRES_HOST}" >> backend/.env.dev
+        echo "SECRET=${SECRET}" >> backend/.env.dev
+        echo "GO_ENV=${GO_ENV}" >> backend/.env.dev
+        echo "API_DOMAIN=${API_DOMAIN}" >> backend/.env.dev
+        echo "FE_URL=${FE_URL}" >> backend/.env.dev
+
     - name: Docker Compose Build
       run: docker compose build
 
