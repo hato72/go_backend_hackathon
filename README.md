@@ -14,7 +14,7 @@ https://free-casquette-dee.notion.site/d558148d80f742a4ac77c0bf76b4a2c9?pvs=4
 
 
 ## 実行方法
-
+<!--
 ```sh
 .env.dev:
 
@@ -43,6 +43,7 @@ go run src/migrate/migrate.go
 go run src/main.go
 
 ```
+-->
 
 
 ## メモ
