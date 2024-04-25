@@ -16,6 +16,7 @@ type ICuisineController interface {
 	CreateCuisine(c echo.Context) error
 	UpdateCuisine(c echo.Context) error
 	DeleteCuisine(c echo.Context) error
+	UploadImage(c echo.Context) error
 }
 
 type cuisineController struct {
@@ -104,10 +105,39 @@ func (cc *cuisineController) DeleteCuisine(c echo.Context) error {
 	return c.NoContent(http.StatusNoContent)
 }
 
-// func (cc * cuisineController) UploadImage(c echo.Context) error{
-// 	user := c.Get("user").(*jwt.Token)
-// 	claims := user.Claims.(jwt.MapClaims)
-// 	userId := claims["user_id"]
+func (cc *cuisineController) UploadImage(c echo.Context) error {
+	user := c.Get("user").(*jwt.Token)
+	claims := user.Claims.(jwt.MapClaims)
+	userId := claims["user_id"]
 
-// 	file,err := c.FormFile("image")
-// }
+	file, err := c.FormFile("image")
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, err.Error())
+	}
+
+	img, err := file.Open()
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err.Error())
+	}
+	defer img.Close()
+
+	// 画像データをバイト配列に変換する
+	imgBytes := make([]byte, file.Size)
+	_, err = img.Read(imgBytes)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err.Error())
+	}
+
+	cuisine := model.Cuisine{}
+	if err := c.Bind(&cuisine); err != nil { //リクエストボディに含まれる内容をcuisine構造体に代入
+		return c.JSON(http.StatusBadRequest, err.Error())
+	}
+	cuisine.UserId = uint(userId.(float64))
+	cuisine.Image = imgBytes
+	cuisineRes, err := cc.cu.CreateCuisine(cuisine)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err.Error())
+	}
+
+	return c.JSON(http.StatusOK, cuisineRes)
+}

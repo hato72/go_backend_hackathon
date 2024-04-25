@@ -41,6 +41,7 @@ func NewRouter(uc controller.IUserController, cc controller.ICuisineController) 
 	c.PUT("/:cuisineId", cc.UpdateCuisine)
 	c.DELETE("/:cuisineId", cc.DeleteCuisine)
 
-	//c.POST("/image", cc.UploadImage)
+	c.POST("/image", cc.UploadImage)
+	//c.POST("/description",cc.Description)
 	return e
 }
