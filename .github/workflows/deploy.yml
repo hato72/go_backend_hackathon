@@ -1,4 +1,4 @@
-name: Docker compose up
+name: Docker compose 
 
 on:
   push:
@@ -49,11 +49,11 @@ jobs:
         echo "API_DOMAIN=${API_DOMAIN}" >> backend/.env.dev
         echo "FE_URL=${FE_URL}" >> backend/.env.dev
 
-    # - name: Docker Compose Build
-    #   run: docker compose build
+    - name: Docker Compose Build
+      run: docker compose build
 
     - name: Docker Compose Up
-      run: docker compose up　--build -d
+      run: docker compose up -d
       #continue-on-error: true
       #timeout-minutes: 5
 
