@@ -53,7 +53,11 @@ jobs:
     #   run: docker compose build
 
     - name: Docker Compose Up
-      run: docker compose up
+      run: docker compose up -d
+      continue-on-error: true
+      timeout-minutes: 5
+      # 特定の出力が表示された場合にジョブを継続する
+      if: steps.docker-compose-up.outputs.stdout.contains('http server started on [::]:')
 
     - name: Migrate Database
       run: docker-compose run --rm backend sh -c "go run src/migrate/migrate.go"
