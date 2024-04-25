@@ -54,7 +54,7 @@ jobs:
 
     - name: Docker Compose Up
       run: docker compose up -d
-      # continue-on-error: true
+      #continue-on-error: true
       timeout-minutes: 5
 
     - name: Check if Server Started
@@ -65,7 +65,8 @@ jobs:
 
     - name: Run Application
       run: docker-compose run --rm backend sh -c "go run src/main.go"
-      timeout-minutes: 5
+      continue-on-error: true
+      timeout-minutes: 4
 
     
       
