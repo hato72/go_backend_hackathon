@@ -29,7 +29,20 @@ func NewRouter(uc controller.IUserController, cc controller.ICuisineController) 
 	e.POST("/signup", uc.SignUp) //エンドポイント追加
 	e.POST("/login", uc.Login)
 	e.POST("/logout", uc.Logout)
+	// e.PUT("/update", uc.Update)
+	// e.PUT("/update", uc.Update, echojwt.WithConfig(echojwt.Config{
+	// 	SigningKey:  []byte(os.Getenv("SECRET")),
+	// 	TokenLookup: "cookie:token",
+	// }))
 	e.GET("/csrf", uc.CsrfToken)
+
+	u := e.Group("/update")
+	u.Use(echojwt.WithConfig(echojwt.Config{ //エンドポイントにミドルウェアを追加
+		SigningKey:  []byte(os.Getenv("SECRET")),
+		TokenLookup: "cookie:token",
+	}))
+	u.PUT("", uc.Update)
+
 	c := e.Group("/cuisines")
 	c.Use(echojwt.WithConfig(echojwt.Config{ //エンドポイントにミドルウェアを追加
 		SigningKey:  []byte(os.Getenv("SECRET")),

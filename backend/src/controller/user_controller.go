@@ -3,10 +3,12 @@ package controller
 import (
 	"backend/src/model"
 	"backend/src/usecase"
+	"log"
 	"net/http"
 	"os"
 	"time"
 
+	"github.com/golang-jwt/jwt/v5"
 	"github.com/labstack/echo/v4"
 )
 
@@ -14,6 +16,7 @@ type IUserController interface {
 	SignUp(c echo.Context) error
 	Login(c echo.Context) error
 	Logout(c echo.Context) error
+	Update(c echo.Context) error
 	CsrfToken(c echo.Context) error
 }
 
@@ -71,6 +74,39 @@ func (uc *UserController) Logout(c echo.Context) error {
 	cookie.SameSite = http.SameSiteNoneMode
 	c.SetCookie(cookie) //httpレスポンスに含める
 	return c.NoContent(http.StatusOK)
+}
+
+func (uc *UserController) Update(c echo.Context) error {
+	user := model.User{}
+	if err := c.Bind(&user); err != nil {
+		return c.JSON(http.StatusBadRequest, err.Error())
+	}
+	log.Print(user)
+
+	authUser := c.Get("user").(*jwt.Token)
+	claims := authUser.Claims.(jwt.MapClaims)
+	userId := claims["user_id"]
+
+	user.ID = uint(userId.(float64))
+	newEmail := c.FormValue("email")
+	newName := c.FormValue("name")
+	newPassword := c.FormValue("password")
+	iconFile, err := c.FormFile("icon")
+
+	log.Print(user.ID, newEmail, newName, newPassword, iconFile)
+
+	if err != nil {
+		if err != http.ErrMissingFile {
+			return c.JSON(http.StatusBadRequest, err.Error())
+		}
+	}
+
+	userRes, err := uc.uu.Update(user, newEmail, newName, newPassword, iconFile)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, err.Error())
+	}
+
+	return c.JSON(http.StatusOK, userRes)
 }
 
 func (uc *UserController) CsrfToken(c echo.Context) error {

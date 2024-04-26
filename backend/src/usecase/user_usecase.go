@@ -4,7 +4,12 @@ import (
 	"backend/src/model"
 	"backend/src/repository"
 	"backend/src/validator"
+	"crypto/sha256"
+	"encoding/hex"
+	"io"
+	"mime/multipart"
 	"os"
+	"path/filepath"
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
@@ -14,6 +19,7 @@ import (
 type IUserUsecase interface {
 	SignUp(user model.User) (model.UserResponse, error)
 	Login(user model.User) (string, error)
+	Update(user model.User, newEmail string, newName string, newPassword string, iconFile *multipart.FileHeader) (model.UserResponse, error)
 }
 
 type userUsecase struct {
@@ -38,9 +44,10 @@ func (uu *userUsecase) SignUp(user model.User) (model.UserResponse, error) {
 		return model.UserResponse{}, err
 	}
 	resUser := model.UserResponse{
-		ID:    newUser.ID,
-		Name:  newUser.Name,
-		Email: newUser.Email,
+		ID:      newUser.ID,
+		Name:    newUser.Name,
+		Email:   newUser.Email,
+		IconUrl: newUser.IconUrl,
 	}
 	return resUser, nil
 }
@@ -66,4 +73,71 @@ func (uu *userUsecase) Login(user model.User) (string, error) {
 		return "", err
 	}
 	return tokenString, nil
+}
+
+func (uu *userUsecase) Update(user model.User, newEmail string, newName string, newPassword string, iconFile *multipart.FileHeader) (model.UserResponse, error) {
+
+	if newPassword != "" {
+		hash, err := bcrypt.GenerateFromPassword([]byte(user.Password), 10)
+		if err != nil {
+			return model.UserResponse{}, err
+		}
+		user.Password = string(hash)
+	}
+
+	if iconFile != nil {
+		src, err := iconFile.Open()
+		if err != nil {
+			return model.UserResponse{}, err
+		}
+		defer src.Close()
+
+		data, err := io.ReadAll(src)
+		if err != nil {
+			return model.UserResponse{}, err
+		}
+
+		hasher := sha256.New()
+		hasher.Write(data)
+		hashValue := hex.EncodeToString(hasher.Sum(nil))
+
+		ext := filepath.Ext(iconFile.Filename)
+
+		iconUrl := "icons/" + hashValue + ext
+
+		dst, err := os.Create("public/images/" + iconUrl)
+		if err != nil {
+			return model.UserResponse{}, err
+		}
+
+		defer dst.Close()
+
+		if _, err := dst.Write(data); err != nil {
+			return model.UserResponse{}, nil
+		}
+
+		user.IconUrl = &iconUrl
+
+	}
+
+	updatedUser := model.User{
+		Name:     user.Name,
+		Email:    user.Email,
+		Password: user.Password,
+		IconUrl:  user.IconUrl,
+	}
+
+	if err := uu.ur.UpdateUser(&updatedUser); err != nil {
+		return model.UserResponse{}, err
+	}
+
+	resUser := model.UserResponse{
+		ID:      updatedUser.ID,
+		Name:    updatedUser.Name,
+		Email:   updatedUser.Email,
+		IconUrl: updatedUser.IconUrl,
+	}
+
+	return resUser, nil
+
 }
