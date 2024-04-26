@@ -14,6 +14,8 @@ type ICuisineRepository interface {
 	CreateCuisine(cuisine *model.Cuisine) error                               //タスクの新規作成
 	UpdateCuisine(cuisine *model.Cuisine, userId uint, cuisineId uint) error  //タスクの更新
 	DeleteCuisine(userId uint, cuisineId uint) error                          //タスクの削除
+	UpdateCuisine_Image(cuisine *model.Cuisine, image []byte, userId uint, cuisineId uint) error
+	AddURL(cuisine *model.Cuisine, userId uint, cuisineId uint) error
 }
 
 type cuisineRepository struct {
@@ -58,6 +60,28 @@ func (cr *cuisineRepository) UpdateCuisine(cuisine *model.Cuisine, userId uint, 
 
 func (cr *cuisineRepository) DeleteCuisine(userId uint, cuisineId uint) error {
 	result := cr.db.Where("id=? AND user_id=?", cuisineId, userId).Delete(&model.Cuisine{})
+	if result.Error != nil {
+		return result.Error
+	}
+	if result.RowsAffected < 1 { //更新されたレコードの数を取得できる
+		return fmt.Errorf("object does not exists")
+	}
+	return nil
+}
+
+func (cr *cuisineRepository) UpdateCuisine_Image(cuisine *model.Cuisine, image []byte, userId uint, cuisineId uint) error {
+	result := cr.db.Model(cuisine).Clauses(clause.Returning{}).Where("id=? AND user_id=?", cuisineId, userId).Update("image", image)
+	if result.Error != nil {
+		return result.Error
+	}
+	if result.RowsAffected < 1 { //更新されたレコードの数を取得できる
+		return fmt.Errorf("object does not exists")
+	}
+	return nil
+}
+
+func (cr *cuisineRepository) AddURL(cuisine *model.Cuisine, userId uint, cuisineId uint) error {
+	result := cr.db.Model(cuisine).Clauses(clause.Returning{}).Where("id=? AND user_id=?", cuisineId, userId).Update("url", cuisine.URL)
 	if result.Error != nil {
 		return result.Error
 	}

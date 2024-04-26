@@ -38,10 +38,10 @@ func NewRouter(uc controller.IUserController, cc controller.ICuisineController) 
 	c.GET("", cc.GetAllCuisines)            //cuisinesのエンドポイントにリクエストがあった場合
 	c.GET("/:cuisineId", cc.GetCuisineById) //リクエストパラメーターにcuisineidが入力された場合
 	c.POST("", cc.CreateCuisine)
-	c.PUT("/:cuisineId", cc.UpdateCuisine)
+	c.PUT("/:cuisineId", cc.UpdateCuisine) //titleしか更新されない
 	c.DELETE("/:cuisineId", cc.DeleteCuisine)
 
-	c.POST("/image", cc.UploadImage)
-	c.POST("/cuisine", cc.CuisineData)
+	c.PUT("/image/:cuisineId", cc.UploadImage)
+	c.PUT("/url/:cuisineId", cc.AddURL)
 	return e
 }

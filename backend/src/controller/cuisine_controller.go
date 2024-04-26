@@ -3,6 +3,7 @@ package controller
 import (
 	"backend/src/model"
 	"backend/src/usecase"
+	"log"
 	"net/http"
 	"strconv"
 
@@ -17,7 +18,7 @@ type ICuisineController interface {
 	UpdateCuisine(c echo.Context) error
 	DeleteCuisine(c echo.Context) error
 	UploadImage(c echo.Context) error
-	CuisineData(c echo.Context) error
+	AddURL(c echo.Context) error
 }
 
 type cuisineController struct {
@@ -32,6 +33,7 @@ func (cc *cuisineController) GetAllCuisines(c echo.Context) error {
 	user := c.Get("user").(*jwt.Token)    //コンテキストからjwtをデコードした値を読み込む
 	claims := user.Claims.(jwt.MapClaims) //その中のデコードされたclaimsを取得
 	userId := claims["user_id"]           //claimsの中のuserIdを取得
+	//log.Print(userId)
 
 	cuisineRes, err := cc.cu.GetAllCuisines(uint(userId.(float64))) //一度floatにしてからuintに型変換
 	if err != nil {
@@ -44,6 +46,8 @@ func (cc *cuisineController) GetCuisineById(c echo.Context) error {
 	user := c.Get("user").(*jwt.Token)
 	claims := user.Claims.(jwt.MapClaims)
 	userId := claims["user_id"]
+	//log.Print(userId)
+
 	id := c.Param("cuisineId")       //リクエストパラメーターからcuisineIdを取得
 	cuisineId, _ := strconv.Atoi(id) //stringからintに
 	cuisineRes, err := cc.cu.GetCuisineById(uint(userId.(float64)), uint(cuisineId))
@@ -57,6 +61,7 @@ func (cc *cuisineController) CreateCuisine(c echo.Context) error {
 	user := c.Get("user").(*jwt.Token)
 	claims := user.Claims.(jwt.MapClaims)
 	userId := claims["user_id"]
+	//log.Print(userId)
 
 	cuisine := model.Cuisine{}
 	if err := c.Bind(&cuisine); err != nil { //リクエストボディに含まれる内容をcuisine構造体に代入
@@ -76,6 +81,7 @@ func (cc *cuisineController) UpdateCuisine(c echo.Context) error {
 	userId := claims["user_id"]
 	id := c.Param("cuisineId")
 	cuisineId, _ := strconv.Atoi(id)
+	//log.Print(userId)
 
 	cuisine := model.Cuisine{}
 	if err := c.Bind(&cuisine); err != nil {
@@ -94,6 +100,7 @@ func (cc *cuisineController) DeleteCuisine(c echo.Context) error {
 	userId := claims["user_id"]
 	id := c.Param("cuisineId")
 	cuisineId, _ := strconv.Atoi(id)
+	//log.Print(userId)
 
 	cuisine := model.Cuisine{}
 	if err := c.Bind(&cuisine); err != nil {
@@ -106,16 +113,18 @@ func (cc *cuisineController) DeleteCuisine(c echo.Context) error {
 	return c.NoContent(http.StatusNoContent)
 }
 
+// 料理の写真を追加
 func (cc *cuisineController) UploadImage(c echo.Context) error {
 	user := c.Get("user").(*jwt.Token)
 	claims := user.Claims.(jwt.MapClaims)
 	userId := claims["user_id"]
+	id := c.Param("cuisineId")
+	cuisineId, _ := strconv.Atoi(id)
 
 	file, err := c.FormFile("image")
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, err.Error())
 	}
-
 	img, err := file.Open()
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
@@ -133,9 +142,11 @@ func (cc *cuisineController) UploadImage(c echo.Context) error {
 	if err := c.Bind(&cuisine); err != nil { //リクエストボディに含まれる内容をcuisine構造体に代入
 		return c.JSON(http.StatusBadRequest, err.Error())
 	}
-	cuisine.UserId = uint(userId.(float64))
-	cuisine.Image = imgBytes
-	cuisineRes, err := cc.cu.CreateCuisine(cuisine)
+	// cuisine.UserId = uint(userId.(float64))
+	// cuisine.Image = imgBytes
+	// cuisineRes, err := cc.cu.CreateCuisine(cuisine)
+	log.Print("発火1")
+	cuisineRes, err := cc.cu.UpdateCuisine_Image(cuisine, imgBytes, uint(userId.(float64)), uint(cuisineId))
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
@@ -143,23 +154,22 @@ func (cc *cuisineController) UploadImage(c echo.Context) error {
 	return c.JSON(http.StatusOK, cuisineRes)
 }
 
-func (cc *cuisineController) CuisineData(c echo.Context) error {
+// urlを追加
+func (cc *cuisineController) AddURL(c echo.Context) error {
 	user := c.Get("user").(*jwt.Token)
 	claims := user.Claims.(jwt.MapClaims)
 	userId := claims["user_id"]
-
-	url := c.Param("cuisine")
+	id := c.Param("cuisineId")
+	cuisineId, _ := strconv.Atoi(id)
+	//log.Print(userId)
 
 	cuisine := model.Cuisine{}
-	if err := c.Bind(&cuisine); err != nil { //リクエストボディに含まれる内容をcuisine構造体に代入
+	if err := c.Bind(&cuisine); err != nil {
 		return c.JSON(http.StatusBadRequest, err.Error())
 	}
-	cuisine.UserId = uint(userId.(float64))
-	cuisine.URL = url
-	cuisineRes, err := cc.cu.CreateCuisine(cuisine)
+	cuisineRes, err := cc.cu.AddURL(cuisine, uint(userId.(float64)), uint(cuisineId))
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
-
 	return c.JSON(http.StatusOK, cuisineRes)
 }
