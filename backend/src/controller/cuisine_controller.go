@@ -18,7 +18,7 @@ type ICuisineController interface {
 	UpdateCuisine(c echo.Context) error
 	DeleteCuisine(c echo.Context) error
 	UploadImage(c echo.Context) error
-	AddURL(c echo.Context) error
+	//AddURL(c echo.Context) error
 }
 
 type cuisineController struct {
@@ -155,21 +155,21 @@ func (cc *cuisineController) UploadImage(c echo.Context) error {
 }
 
 // urlを追加
-func (cc *cuisineController) AddURL(c echo.Context) error {
-	user := c.Get("user").(*jwt.Token)
-	claims := user.Claims.(jwt.MapClaims)
-	userId := claims["user_id"]
-	id := c.Param("cuisineId")
-	cuisineId, _ := strconv.Atoi(id)
-	//log.Print(userId)
+// func (cc *cuisineController) AddURL(c echo.Context) error {
+// 	user := c.Get("user").(*jwt.Token)
+// 	claims := user.Claims.(jwt.MapClaims)
+// 	userId := claims["user_id"]
+// 	id := c.Param("cuisineId")
+// 	cuisineId, _ := strconv.Atoi(id)
+// 	//log.Print(userId)
 
-	cuisine := model.Cuisine{}
-	if err := c.Bind(&cuisine); err != nil {
-		return c.JSON(http.StatusBadRequest, err.Error())
-	}
-	cuisineRes, err := cc.cu.AddURL(cuisine, uint(userId.(float64)), uint(cuisineId))
-	if err != nil {
-		return c.JSON(http.StatusInternalServerError, err.Error())
-	}
-	return c.JSON(http.StatusOK, cuisineRes)
-}
+// 	cuisine := model.Cuisine{}
+// 	if err := c.Bind(&cuisine); err != nil {
+// 		return c.JSON(http.StatusBadRequest, err.Error())
+// 	}
+// 	cuisineRes, err := cc.cu.AddURL(cuisine, uint(userId.(float64)), uint(cuisineId))
+// 	if err != nil {
+// 		return c.JSON(http.StatusInternalServerError, err.Error())
+// 	}
+// 	return c.JSON(http.StatusOK, cuisineRes)
+// }

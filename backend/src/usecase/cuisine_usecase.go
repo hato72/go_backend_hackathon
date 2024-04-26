@@ -14,7 +14,7 @@ type ICuisineUsecase interface {
 	UpdateCuisine(cuisine model.Cuisine, userId uint, cuisineId uint) (model.CuisineResponse, error)
 	DeleteCuisine(userId uint, cuisineId uint) error
 	UpdateCuisine_Image(cuisine model.Cuisine, image []byte, userId uint, cuisineId uint) (model.CuisineResponse, error)
-	AddURL(cuisine model.Cuisine, userId uint, cuisineId uint) (model.CuisineResponse, error)
+	//AddURL(cuisine model.Cuisine, userId uint, cuisineId uint) (model.CuisineResponse, error)
 }
 
 type cuisineUsecase struct {
@@ -88,9 +88,9 @@ func (cu *cuisineUsecase) UpdateCuisine(cuisine model.Cuisine, userId uint, cuis
 	if err := cu.cr.UpdateCuisine(&cuisine, userId, cuisineId); err != nil {
 		return model.CuisineResponse{}, err
 	}
-	if err := cu.cr.AddURL(&cuisine, userId, cuisineId); err != nil {
-		return model.CuisineResponse{}, err
-	}
+	// if err := cu.cr.AddURL(&cuisine, userId, cuisineId); err != nil {
+	// 	return model.CuisineResponse{}, err
+	// }
 	rescuisine := model.CuisineResponse{
 		ID:        cuisine.ID,
 		Title:     cuisine.Title,
@@ -130,18 +130,18 @@ func (cu *cuisineUsecase) UpdateCuisine_Image(cuisine model.Cuisine, image []byt
 	return rescuisine, nil
 }
 
-func (cu *cuisineUsecase) AddURL(cuisine model.Cuisine, userId uint, cuisineId uint) (model.CuisineResponse, error) {
-	if err := cu.cr.AddURL(&cuisine, userId, cuisineId); err != nil {
-		return model.CuisineResponse{}, err
-	}
-	rescuisine := model.CuisineResponse{
-		ID:        cuisine.ID,
-		Title:     cuisine.Title,
-		Image:     cuisine.Image,
-		URL:       cuisine.URL,
-		CreatedAt: cuisine.CreatedAt,
-		UpdatedAt: cuisine.UpdatedAt,
-		UserId:    cuisine.UserId,
-	}
-	return rescuisine, nil
-}
+// func (cu *cuisineUsecase) AddURL(cuisine model.Cuisine, userId uint, cuisineId uint) (model.CuisineResponse, error) {
+// 	if err := cu.cr.AddURL(&cuisine, userId, cuisineId); err != nil {
+// 		return model.CuisineResponse{}, err
+// 	}
+// 	rescuisine := model.CuisineResponse{
+// 		ID:        cuisine.ID,
+// 		Title:     cuisine.Title,
+// 		Image:     cuisine.Image,
+// 		URL:       cuisine.URL,
+// 		CreatedAt: cuisine.CreatedAt,
+// 		UpdatedAt: cuisine.UpdatedAt,
+// 		UserId:    cuisine.UserId,
+// 	}
+// 	return rescuisine, nil
+// }
