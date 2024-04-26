@@ -23,12 +23,13 @@ func NewRouter(uc controller.IUserController, cc controller.ICuisineController) 
 		CookiePath:     "/",
 		CookieDomain:   os.Getenv("API_DOMAIN"),
 		CookieHTTPOnly: true,
-		CookieSameSite: http.SameSiteNoneMode,
-		//CookieSameSite: http.SameSiteDefaultMode, //postmanで確認のため
+		//CookieSameSite: http.SameSiteNoneMode,
+		CookieSameSite: http.SameSiteDefaultMode, //postmanで確認のため
 	}))
 	e.POST("/signup", uc.SignUp) //エンドポイント追加
 	e.POST("/login", uc.Login)
 	e.POST("/logout", uc.Logout)
+	e.PUT("/update", uc.Update)
 	e.GET("/csrf", uc.CsrfToken)
 	t := e.Group("/cuisines")
 	t.Use(echojwt.WithConfig(echojwt.Config{ //エンドポイントにミドルウェアを追加
