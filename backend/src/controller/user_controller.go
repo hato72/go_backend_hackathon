@@ -3,7 +3,6 @@ package controller
 import (
 	"backend/src/model"
 	"backend/src/usecase"
-	"log"
 	"net/http"
 	"os"
 	"time"
@@ -91,12 +90,13 @@ func (uc *UserController) Update(c echo.Context) error {
 	//log.Print(userId)
 
 	userID := uint(userId.(float64))
+	user.ID = userID
 	newEmail := c.FormValue("email")
 	newName := c.FormValue("name")
 	newPassword := c.FormValue("password")
 	iconFile, err := c.FormFile("icon")
 
-	log.Print(userID, newEmail, newName, newPassword, iconFile)
+	//log.Print(userID, newEmail, newName, newPassword, iconFile)
 
 	if err != nil {
 		if err != http.ErrMissingFile {

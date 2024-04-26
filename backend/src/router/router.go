@@ -37,7 +37,7 @@ func NewRouter(uc controller.IUserController, cc controller.ICuisineController) 
 	e.GET("/csrf", uc.CsrfToken)
 
 	u := e.Group("/update")
-	u.Use(echojwt.WithConfig(echojwt.Config{ //エンドポイントにミドルウェアを追加
+	u.Use(echojwt.WithConfig(echojwt.Config{
 		SigningKey:  []byte(os.Getenv("SECRET")),
 		TokenLookup: "cookie:token",
 	}))
