@@ -7,6 +7,7 @@ import (
 	"crypto/sha256"
 	"encoding/hex"
 	"io"
+	"log"
 	"mime/multipart"
 	"os"
 	"path/filepath"
@@ -121,11 +122,13 @@ func (uu *userUsecase) Update(user model.User, newEmail string, newName string, 
 	}
 
 	updatedUser := model.User{
-		Name:     user.Name,
-		Email:    user.Email,
-		Password: user.Password,
+		ID:       user.ID,
+		Name:     newName,
+		Email:    newEmail,
+		Password: newPassword,
 		IconUrl:  user.IconUrl,
 	}
+	log.Print("updateUser:", updatedUser)
 
 	if err := uu.ur.UpdateUser(&updatedUser); err != nil {
 		return model.UserResponse{}, err
@@ -137,6 +140,7 @@ func (uu *userUsecase) Update(user model.User, newEmail string, newName string, 
 		Email:   updatedUser.Email,
 		IconUrl: updatedUser.IconUrl,
 	}
+	log.Print("resUser:", resUser)
 
 	return resUser, nil
 

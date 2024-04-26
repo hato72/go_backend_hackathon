@@ -81,19 +81,22 @@ func (uc *UserController) Update(c echo.Context) error {
 	if err := c.Bind(&user); err != nil {
 		return c.JSON(http.StatusBadRequest, err.Error())
 	}
-	log.Print(user)
+	//log.Print(user)
 
 	authUser := c.Get("user").(*jwt.Token)
 	claims := authUser.Claims.(jwt.MapClaims)
 	userId := claims["user_id"]
 
-	user.ID = uint(userId.(float64))
+	//log.Print(authUser)
+	//log.Print(userId)
+
+	userID := uint(userId.(float64))
 	newEmail := c.FormValue("email")
 	newName := c.FormValue("name")
 	newPassword := c.FormValue("password")
 	iconFile, err := c.FormFile("icon")
 
-	log.Print(user.ID, newEmail, newName, newPassword, iconFile)
+	log.Print(userID, newEmail, newName, newPassword, iconFile)
 
 	if err != nil {
 		if err != http.ErrMissingFile {

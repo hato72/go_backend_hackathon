@@ -2,6 +2,7 @@ package repository
 
 import (
 	"backend/src/model"
+	"log"
 
 	"gorm.io/gorm"
 )
@@ -40,23 +41,27 @@ func (ur *userRepository) UpdateUser(user *model.User) error {
 			return err
 		}
 	}
+	log.Print("email", user.Email)
 
 	if user.Name != "" {
 		if err := ur.db.Model(user).Where("id = ?", user.ID).Update("name", user.Name).Error; err != nil {
 			return err
 		}
 	}
+	log.Print("name", user.Name)
 
 	if user.Password != "" {
 		if err := ur.db.Model(user).Where("id = ?", user.ID).Update("password", user.Password).Error; err != nil {
 			return err
 		}
 	}
+	log.Print("pass", user.Password)
 
 	if user.IconUrl != nil {
 		if err := ur.db.Model(user).Where("id = ? ", user.ID).Update("icon_url", user.IconUrl).Error; err != nil {
 			return err
 		}
 	}
+	log.Print("icon", user.IconUrl)
 	return nil
 }
