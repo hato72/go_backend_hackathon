@@ -33,6 +33,8 @@ func (cu *cuisineUsecase) GetAllCuisines(userId uint) ([]model.CuisineResponse, 
 		t := model.CuisineResponse{
 			ID:        v.ID,
 			Title:     v.Title,
+			Image:     v.Image,
+			URL:       v.URL,
 			CreatedAt: v.CreatedAt,
 			UpdatedAt: v.UpdatedAt,
 		}
@@ -49,6 +51,8 @@ func (cu *cuisineUsecase) GetCuisineById(userId uint, cuisineId uint) (model.Cui
 	rescuisine := model.CuisineResponse{
 		ID:        cuisine.ID,
 		Title:     cuisine.Title,
+		Image:     cuisine.Image,
+		URL:       cuisine.URL,
 		CreatedAt: cuisine.CreatedAt,
 		UpdatedAt: cuisine.UpdatedAt,
 	}
@@ -65,6 +69,8 @@ func (cu *cuisineUsecase) CreateCuisine(cuisine model.Cuisine) (model.CuisineRes
 	rescuisine := model.CuisineResponse{
 		ID:        cuisine.ID,
 		Title:     cuisine.Title,
+		Image:     cuisine.Image,
+		URL:       cuisine.URL,
 		CreatedAt: cuisine.CreatedAt,
 		UpdatedAt: cuisine.UpdatedAt,
 	}
@@ -78,6 +84,8 @@ func (cu *cuisineUsecase) UpdateCuisine(cuisine model.Cuisine, userId uint, cuis
 	rescuisine := model.CuisineResponse{
 		ID:        cuisine.ID,
 		Title:     cuisine.Title,
+		Image:     cuisine.Image,
+		URL:       cuisine.URL,
 		CreatedAt: cuisine.CreatedAt,
 		UpdatedAt: cuisine.UpdatedAt,
 	}
