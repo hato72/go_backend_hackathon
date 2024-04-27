@@ -12,9 +12,12 @@ RUN go mod download
 #COPY backend  ./
 COPY . .
 
+RUN go build -o api ./backend/src/main.go
+
 EXPOSE 8080
 
-CMD ["go", "run", "./src"]
+#CMD ["go", "run", "./src"]
+CMD ["./src"]
 
 
 
