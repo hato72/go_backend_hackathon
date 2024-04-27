@@ -49,6 +49,9 @@ import (
 	"backend/src/router"
 	"backend/src/usecase"
 	"backend/src/validator"
+	"net/http"
+
+	"github.com/labstack/echo/v4"
 )
 
 func main() {
@@ -73,6 +76,10 @@ func main() {
 	e := router.NewRouter(userController, cuisineController)
 	//e := router.NewRouter(userController)
 	e.Logger.Fatal(e.Start(":8080")) //サーバー起動
+	e.GET("/", func(c echo.Context) error {
+		return c.JSON(http.StatusOK, "hello world")
+	})
+
 	//docker,pgAdminを起動->docker compose up -> bashでGO_ENV=dev go run src/main.go
 	//go run src/main.go
 }

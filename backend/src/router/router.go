@@ -2,7 +2,6 @@ package router
 
 import (
 	"backend/src/controller"
-	"log"
 	"net/http"
 	"os"
 
@@ -27,11 +26,10 @@ func NewRouter(uc controller.IUserController, cc controller.ICuisineController) 
 		CookieSameSite: http.SameSiteNoneMode,
 		//CookieSameSite: http.SameSiteDefaultMode, //postmanで確認のため
 	}))
-	e.Start(":8080")
-	log.Fatalln(e.Start(":8080"))
-	e.GET("/", func(c echo.Context) error {
-		return c.JSON(http.StatusOK, "hello world")
-	})
+	//e.Start(":8080")
+	// e.GET("/", func(c echo.Context) error {
+	// 	return c.JSON(http.StatusOK, "hello world")
+	// })
 
 	e.POST("/signup", uc.SignUp) //エンドポイント追加
 	e.POST("/login", uc.Login)
