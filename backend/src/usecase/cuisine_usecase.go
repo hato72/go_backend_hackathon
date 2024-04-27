@@ -225,29 +225,48 @@ func (cu *cuisineUsecase) SetCuisine(cuisine model.Cuisine, iconFile *multipart.
 
 	updatedCuisine := model.Cuisine{
 		ID:        cuisine.ID,
-		Title:     cuisine.Title,
+		Title:     title,
 		IconUrl:   cuisine.IconUrl,
-		URL:       cuisine.URL,
+		URL:       url,
 		CreatedAt: cuisine.CreatedAt,
 		UpdatedAt: cuisine.UpdatedAt,
 		User:      cuisine.User,
 		UserId:    cuisine.UserId,
 	}
-	//log.Print(updatedCuisine)
+	//log.Print("cuisine", cuisine)
+	//log.Print("updatedCuisine", updatedCuisine)
 
 	if err := cu.cr.SettingCuisine(&updatedCuisine); err != nil {
 		return model.CuisineResponse{}, err
 	}
 
 	rescuisine := model.CuisineResponse{
-		ID:        cuisine.ID,
+		ID:        updatedCuisine.ID,
 		Title:     cuisine.Title,
 		IconUrl:   cuisine.IconUrl,
 		URL:       cuisine.URL,
 		CreatedAt: cuisine.CreatedAt,
-		UpdatedAt: cuisine.UpdatedAt,
-		UserId:    cuisine.UserId,
+		UpdatedAt: updatedCuisine.UpdatedAt,
+		UserId:    updatedCuisine.UserId,
 	}
-	//log.Print(rescuisine)
+
+	// log.Print("updatedCuisine")
+	// log.Print("title", updatedCuisine.Title)
+	// log.Print("url", updatedCuisine.URL)
+	// log.Print("CreatedAt", updatedCuisine.CreatedAt)
+	// log.Print("UpdatedAt", updatedCuisine.UpdatedAt)
+
+	// log.Print("cuisine")
+	// log.Print("title", cuisine.Title)
+	// log.Print("url", cuisine.URL)
+	// log.Print("CreatedAt", cuisine.CreatedAt)
+	// log.Print("UpdatedAt", cuisine.UpdatedAt)
+
+	// log.Print("rescuisine")
+	// log.Print("title", rescuisine.Title)
+	// log.Print("url", rescuisine.URL)
+	// log.Print("CreatedAt", rescuisine.CreatedAt)
+	// log.Print("UpdatedAt", rescuisine.UpdatedAt)
+
 	return rescuisine, nil
 }

@@ -163,11 +163,22 @@ func (cc *cuisineController) SetCuisine(c echo.Context) error {
 	if err := c.Bind(&cuisine); err != nil {
 		return c.JSON(http.StatusBadRequest, err.Error())
 	}
-	cuisineRes, err := cc.cu.SetCuisine(cuisine, iconFile, url, title, uint(userId.(float64)), uint(cuisineId))
+
+	cuisineRes, err := cc.cu.GetCuisineById(uint(userId.(float64)), uint(cuisineId))
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
-	return c.JSON(http.StatusOK, cuisineRes)
+	cuisine.CreatedAt = cuisineRes.CreatedAt
+	cuisine.UpdatedAt = cuisineRes.UpdatedAt
+	cuisine.Title = cuisineRes.Title
+	cuisine.IconUrl = cuisineRes.IconUrl
+	cuisine.URL = cuisineRes.URL
+
+	newcuisineRes, err := cc.cu.SetCuisine(cuisine, iconFile, url, title, uint(userId.(float64)), uint(cuisineId))
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err.Error())
+	}
+	return c.JSON(http.StatusOK, newcuisineRes)
 }
 
 // 料理の写真を追加

@@ -78,6 +78,8 @@ func (cr *cuisineRepository) SettingCuisine(cuisine *model.Cuisine) error {
 		// 	return fmt.Errorf("object does not exists")
 		// }
 	}
+	//log.Print(cuisine.IconUrl)
+
 	if cuisine.URL != "" {
 		url_result := cr.db.Model(cuisine).Clauses(clause.Returning{}).Where("id=? AND user_id=?", cuisine.ID, cuisine.UserId).Update("url", cuisine.URL)
 		if url_result.Error != nil {
@@ -87,5 +89,6 @@ func (cr *cuisineRepository) SettingCuisine(cuisine *model.Cuisine) error {
 		// 	return fmt.Errorf("object does not exists")
 		// }
 	}
+	//log.Print(cuisine.URL)
 	return nil
 }
