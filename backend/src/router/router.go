@@ -29,6 +29,9 @@ func NewRouter(uc controller.IUserController, cc controller.ICuisineController) 
 	}))
 	e.Start(":8080")
 	log.Fatalln(e.Start(":8080"))
+	e.GET("/", func(c echo.Context) error {
+		return c.JSON(http.StatusOK, "hello world")
+	})
 
 	e.POST("/signup", uc.SignUp) //エンドポイント追加
 	e.POST("/login", uc.Login)
