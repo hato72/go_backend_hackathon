@@ -7,7 +7,10 @@ COPY go.mod ./
 
 RUN apk upgrade --update && apk --no-cache add git gcc musl-dev
 
+#COPY backend  ./
 COPY . .
+
+EXPOSE 8080
 
 CMD ["go", "run", "./backend/src"]
 
