@@ -26,6 +26,7 @@ func NewRouter(uc controller.IUserController, cc controller.ICuisineController) 
 		CookieSameSite: http.SameSiteNoneMode,
 		//CookieSameSite: http.SameSiteDefaultMode, //postmanで確認のため
 	}))
+	e.Start(":8080")
 	e.POST("/signup", uc.SignUp) //エンドポイント追加
 	e.POST("/login", uc.Login)
 	e.POST("/logout", uc.Logout)
