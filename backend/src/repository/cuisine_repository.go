@@ -12,8 +12,9 @@ type ICuisineRepository interface {
 	GetAllCuisines(cuisines *[]model.Cuisine, userId uint) error              //作成したタスクの一覧を取得
 	GetCuisineById(cuisine *model.Cuisine, userId uint, cuisineId uint) error //引数のcuisineIdに一致するタスクを返す
 	CreateCuisine(cuisine *model.Cuisine) error                               //タスクの新規作成
-	UpdateCuisine(cuisine *model.Cuisine, userId uint, cuisineId uint) error  //タスクの更新
-	DeleteCuisine(userId uint, cuisineId uint) error                          //タスクの削除
+	//UpdateCuisine(cuisine *model.Cuisine, userId uint, cuisineId uint) error  //タスクの更新
+	DeleteCuisine(userId uint, cuisineId uint) error //タスクの削除
+	SettingCuisine(cuisine *model.Cuisine) error
 }
 
 type cuisineRepository struct {
@@ -45,8 +46,19 @@ func (cr *cuisineRepository) CreateCuisine(cuisine *model.Cuisine) error {
 	return nil
 }
 
-func (cr *cuisineRepository) UpdateCuisine(cuisine *model.Cuisine, userId uint, cuisineId uint) error {
-	result := cr.db.Model(cuisine).Clauses(clause.Returning{}).Where("id=? AND user_id=?", cuisineId, userId).Update("title", cuisine.Title)
+// func (cr *cuisineRepository) UpdateCuisine(cuisine *model.Cuisine, userId uint, cuisineId uint) error {
+// 	result := cr.db.Model(cuisine).Clauses(clause.Returning{}).Where("id=? AND user_id=?", cuisineId, userId).Update("title", cuisine.Title)
+// 	if result.Error != nil {
+// 		return result.Error
+// 	}
+// 	if result.RowsAffected < 1 { //更新されたレコードの数を取得できる
+// 		return fmt.Errorf("object does not exists")
+// 	}
+// 	return nil
+// }
+
+func (cr *cuisineRepository) DeleteCuisine(userId uint, cuisineId uint) error {
+	result := cr.db.Where("id=? AND user_id=?", cuisineId, userId).Delete(&model.Cuisine{})
 	if result.Error != nil {
 		return result.Error
 	}
@@ -56,13 +68,24 @@ func (cr *cuisineRepository) UpdateCuisine(cuisine *model.Cuisine, userId uint, 
 	return nil
 }
 
-func (cr *cuisineRepository) DeleteCuisine(userId uint, cuisineId uint) error {
-	result := cr.db.Where("id=? AND user_id=?", cuisineId, userId).Delete(&model.Cuisine{})
-	if result.Error != nil {
-		return result.Error
+func (cr *cuisineRepository) SettingCuisine(cuisine *model.Cuisine) error {
+	if cuisine.IconUrl != nil {
+		icon_result := cr.db.Model(cuisine).Clauses(clause.Returning{}).Where("id=? AND user_id=?", cuisine.ID, cuisine.UserId).Update("icon_url", cuisine.IconUrl)
+		if icon_result.Error != nil {
+			return icon_result.Error
+		}
+		// if icon_result.RowsAffected < 1 {
+		// 	return fmt.Errorf("object does not exists")
+		// }
 	}
-	if result.RowsAffected < 1 { //更新されたレコードの数を取得できる
-		return fmt.Errorf("object does not exists")
+	if cuisine.URL != "" {
+		url_result := cr.db.Model(cuisine).Clauses(clause.Returning{}).Where("id=? AND user_id=?", cuisine.ID, cuisine.UserId).Update("url", cuisine.URL)
+		if url_result.Error != nil {
+			return url_result.Error
+		}
+		// if url_result.RowsAffected < 1 {
+		// 	return fmt.Errorf("object does not exists")
+		// }
 	}
 	return nil
 }

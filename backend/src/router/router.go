@@ -29,16 +29,33 @@ func NewRouter(uc controller.IUserController, cc controller.ICuisineController) 
 	e.POST("/signup", uc.SignUp) //エンドポイント追加
 	e.POST("/login", uc.Login)
 	e.POST("/logout", uc.Logout)
+	// e.PUT("/update", uc.Update)
+	// e.PUT("/update", uc.Update, echojwt.WithConfig(echojwt.Config{
+	// 	SigningKey:  []byte(os.Getenv("SECRET")),
+	// 	TokenLookup: "cookie:token",
+	// }))
 	e.GET("/csrf", uc.CsrfToken)
-	t := e.Group("/cuisines")
-	t.Use(echojwt.WithConfig(echojwt.Config{ //エンドポイントにミドルウェアを追加
+
+	u := e.Group("/update")
+	u.Use(echojwt.WithConfig(echojwt.Config{
 		SigningKey:  []byte(os.Getenv("SECRET")),
 		TokenLookup: "cookie:token",
 	}))
-	t.GET("", cc.GetAllCuisines)            //tasksのエンドポイントにリクエストがあった場合
-	t.GET("/:cuisineId", cc.GetCuisineById) //リクエストパラメーターにtaskidが入力された場合
-	t.POST("", cc.CreateCuisine)
-	t.PUT("/:cuisineId", cc.UpdateCuisine)
-	t.DELETE("/:cuisineId", cc.DeleteCuisine)
+	u.PUT("", uc.Update)
+
+	c := e.Group("/cuisines")
+	c.Use(echojwt.WithConfig(echojwt.Config{ //エンドポイントにミドルウェアを追加
+		SigningKey:  []byte(os.Getenv("SECRET")),
+		TokenLookup: "cookie:token",
+	}))
+	c.GET("", cc.GetAllCuisines)            //cuisinesのエンドポイントにリクエストがあった場合
+	c.GET("/:cuisineId", cc.GetCuisineById) //リクエストパラメーターにcuisineidが入力された場合
+	//c.POST("", cc.CreateCuisine)
+	c.POST("", cc.AddCuisine) //cuisineテーブル追加
+	//c.PUT("/:cuisineId", cc.UpdateCuisine) //titleしか更新されない
+	c.DELETE("/:cuisineId", cc.DeleteCuisine)
+
+	c.PUT("/:cuisineId", cc.SetCuisine) //cuisineの更新
+	//c.PUT("/url/:cuisineId", cc.AddURL)
 	return e
 }

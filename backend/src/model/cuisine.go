@@ -5,6 +5,8 @@ import "time"
 type Cuisine struct {
 	ID        uint      `json:"id" gorm:"primaryKey"`  //主キーになる
 	Title     string    `json:"title" gorm:"not null"` //空の値を許可しない
+	IconUrl   *string   `json:"icon_url"`
+	URL       string    `json:"url"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
 	User      User      `json:"user" gorm:"foreignKey:UserId; constraint:OnDelete:CASCADE"` //userを削除したときにuserに紐づいているタスクも消去される
@@ -14,6 +16,9 @@ type Cuisine struct {
 type CuisineResponse struct {
 	ID        uint      `json:"id" gorm:"primaryKey"`  //主キーになる
 	Title     string    `json:"title" gorm:"not null"` //空の値を許可しない
+	IconUrl   *string   `json:"icon_url"`
+	URL       string    `json:"url"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
+	UserId    uint      `json:"user_id"`
 }
