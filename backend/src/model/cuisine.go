@@ -5,7 +5,7 @@ import "time"
 type Cuisine struct {
 	ID        uint      `json:"id" gorm:"primaryKey"`  //主キーになる
 	Title     string    `json:"title" gorm:"not null"` //空の値を許可しない
-	Image     []byte    `json:"image"`
+	IconUrl   *string   `json:"icon_url"`
 	URL       string    `json:"url"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
@@ -16,7 +16,7 @@ type Cuisine struct {
 type CuisineResponse struct {
 	ID        uint      `json:"id" gorm:"primaryKey"`  //主キーになる
 	Title     string    `json:"title" gorm:"not null"` //空の値を許可しない
-	Image     []byte    `json:"image"`
+	IconUrl   *string   `json:"icon_url"`
 	URL       string    `json:"url"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`

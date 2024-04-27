@@ -4,17 +4,22 @@ import (
 	"backend/src/model"
 	"backend/src/repository"
 	"backend/src/validator"
-	"log"
+	"crypto/sha256"
+	"encoding/hex"
+	"io"
+	"mime/multipart"
+	"os"
+	"path/filepath"
 )
 
 type ICuisineUsecase interface {
 	GetAllCuisines(userId uint) ([]model.CuisineResponse, error)
 	GetCuisineById(userId uint, cuisineId uint) (model.CuisineResponse, error)
-	CreateCuisine(cuisine model.Cuisine) (model.CuisineResponse, error)
-	UpdateCuisine(cuisine model.Cuisine, userId uint, cuisineId uint) (model.CuisineResponse, error)
+	//CreateCuisine(cuisine model.Cuisine) (model.CuisineResponse, error)
+	//UpdateCuisine(cuisine model.Cuisine, userId uint, cuisineId uint) (model.CuisineResponse, error)
 	DeleteCuisine(userId uint, cuisineId uint) error
-	UpdateCuisine_Image(cuisine model.Cuisine, image []byte, userId uint, cuisineId uint) (model.CuisineResponse, error)
-	//AddURL(cuisine model.Cuisine, userId uint, cuisineId uint) (model.CuisineResponse, error)
+	AddCuisine(cuisine model.Cuisine, iconFile *multipart.FileHeader, url string, title string) (model.CuisineResponse, error)
+	SetCuisine(cuisine model.Cuisine, iconFile *multipart.FileHeader, url string, title string, userId uint, cuisineId uint) (model.CuisineResponse, error)
 }
 
 type cuisineUsecase struct {
@@ -36,7 +41,7 @@ func (cu *cuisineUsecase) GetAllCuisines(userId uint) ([]model.CuisineResponse, 
 		t := model.CuisineResponse{
 			ID:        v.ID,
 			Title:     v.Title,
-			Image:     v.Image,
+			IconUrl:   v.IconUrl,
 			URL:       v.URL,
 			CreatedAt: v.CreatedAt,
 			UpdatedAt: v.UpdatedAt,
@@ -55,7 +60,7 @@ func (cu *cuisineUsecase) GetCuisineById(userId uint, cuisineId uint) (model.Cui
 	rescuisine := model.CuisineResponse{
 		ID:        cuisine.ID,
 		Title:     cuisine.Title,
-		Image:     cuisine.Image,
+		IconUrl:   cuisine.IconUrl,
 		URL:       cuisine.URL,
 		CreatedAt: cuisine.CreatedAt,
 		UpdatedAt: cuisine.UpdatedAt,
@@ -64,7 +69,96 @@ func (cu *cuisineUsecase) GetCuisineById(userId uint, cuisineId uint) (model.Cui
 	return rescuisine, nil
 }
 
-func (cu *cuisineUsecase) CreateCuisine(cuisine model.Cuisine) (model.CuisineResponse, error) {
+// func (cu *cuisineUsecase) CreateCuisine(cuisine model.Cuisine) (model.CuisineResponse, error) {
+// 	if err := cu.cv.CuisineValidate(cuisine); err != nil {
+// 		return model.CuisineResponse{}, err
+// 	}
+// 	if err := cu.cr.CreateCuisine(&cuisine); err != nil {
+// 		return model.CuisineResponse{}, err
+// 	}
+// 	rescuisine := model.CuisineResponse{
+// 		ID:        cuisine.ID,
+// 		Title:     cuisine.Title,
+// 		IconUrl:   cuisine.IconUrl,
+// 		URL:       cuisine.URL,
+// 		CreatedAt: cuisine.CreatedAt,
+// 		UpdatedAt: cuisine.UpdatedAt,
+// 		UserId:    cuisine.UserId,
+// 	}
+// 	//log.Print(rescuisine)
+// 	return rescuisine, nil
+// }
+
+// func (cu *cuisineUsecase) UpdateCuisine(cuisine model.Cuisine, userId uint, cuisineId uint) (model.CuisineResponse, error) {
+// 	if err := cu.cr.UpdateCuisine(&cuisine, userId, cuisineId); err != nil {
+// 		return model.CuisineResponse{}, err
+// 	}
+// 	// if err := cu.cr.AddURL(&cuisine, userId, cuisineId); err != nil {
+// 	// 	return model.CuisineResponse{}, err
+// 	// }
+// 	rescuisine := model.CuisineResponse{
+// 		ID:        cuisine.ID,
+// 		Title:     cuisine.Title,
+// 		IconUrl:   cuisine.IconUrl,
+// 		URL:       cuisine.URL,
+// 		CreatedAt: cuisine.CreatedAt,
+// 		UpdatedAt: cuisine.UpdatedAt,
+// 		UserId:    cuisine.UserId,
+// 	}
+// 	return rescuisine, nil
+// }
+
+func (cu *cuisineUsecase) DeleteCuisine(userId uint, cuisineId uint) error {
+	if err := cu.cr.DeleteCuisine(userId, cuisineId); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (cu *cuisineUsecase) AddCuisine(cuisine model.Cuisine, iconFile *multipart.FileHeader, url string, title string) (model.CuisineResponse, error) {
+
+	if iconFile != nil {
+		src, err := iconFile.Open()
+		if err != nil {
+			return model.CuisineResponse{}, err
+		}
+		defer src.Close()
+
+		data, err := io.ReadAll(src)
+		if err != nil {
+			return model.CuisineResponse{}, err
+		}
+
+		hasher := sha256.New()
+		hasher.Write(data)
+		hashValue := hex.EncodeToString(hasher.Sum(nil))
+
+		ext := filepath.Ext(iconFile.Filename)
+
+		img_url := "cuisine_icons/" + hashValue + ext
+
+		dst, err := os.Create("public/cuisine_images/" + img_url)
+		if err != nil {
+			return model.CuisineResponse{}, err
+		}
+
+		defer dst.Close()
+
+		if _, err := dst.Write(data); err != nil {
+			return model.CuisineResponse{}, nil
+		}
+
+		cuisine.IconUrl = &img_url
+	}
+
+	if url != "" {
+		cuisine.URL = url
+	}
+
+	if title != "" {
+		cuisine.Title = title
+	}
+
 	if err := cu.cv.CuisineValidate(cuisine); err != nil {
 		return model.CuisineResponse{}, err
 	}
@@ -74,7 +168,7 @@ func (cu *cuisineUsecase) CreateCuisine(cuisine model.Cuisine) (model.CuisineRes
 	rescuisine := model.CuisineResponse{
 		ID:        cuisine.ID,
 		Title:     cuisine.Title,
-		Image:     cuisine.Image,
+		IconUrl:   cuisine.IconUrl,
 		URL:       cuisine.URL,
 		CreatedAt: cuisine.CreatedAt,
 		UpdatedAt: cuisine.UpdatedAt,
@@ -84,64 +178,76 @@ func (cu *cuisineUsecase) CreateCuisine(cuisine model.Cuisine) (model.CuisineRes
 	return rescuisine, nil
 }
 
-func (cu *cuisineUsecase) UpdateCuisine(cuisine model.Cuisine, userId uint, cuisineId uint) (model.CuisineResponse, error) {
-	if err := cu.cr.UpdateCuisine(&cuisine, userId, cuisineId); err != nil {
-		return model.CuisineResponse{}, err
-	}
-	// if err := cu.cr.AddURL(&cuisine, userId, cuisineId); err != nil {
-	// 	return model.CuisineResponse{}, err
-	// }
-	rescuisine := model.CuisineResponse{
-		ID:        cuisine.ID,
-		Title:     cuisine.Title,
-		Image:     cuisine.Image,
-		URL:       cuisine.URL,
-		CreatedAt: cuisine.CreatedAt,
-		UpdatedAt: cuisine.UpdatedAt,
-		UserId:    cuisine.UserId,
-	}
-	return rescuisine, nil
-}
-
-func (cu *cuisineUsecase) DeleteCuisine(userId uint, cuisineId uint) error {
-	if err := cu.cr.DeleteCuisine(userId, cuisineId); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (cu *cuisineUsecase) UpdateCuisine_Image(cuisine model.Cuisine, image []byte, userId uint, cuisineId uint) (model.CuisineResponse, error) {
+func (cu *cuisineUsecase) SetCuisine(cuisine model.Cuisine, iconFile *multipart.FileHeader, url string, title string, userId uint, cuisineId uint) (model.CuisineResponse, error) {
 	//cuisine := model.Cuisine{}
-	log.Print("発火2")
-	if err := cu.cr.UpdateCuisine_Image(&cuisine, image, userId, cuisineId); err != nil {
+
+	if iconFile != nil {
+		src, err := iconFile.Open()
+		if err != nil {
+			return model.CuisineResponse{}, err
+		}
+		defer src.Close()
+
+		data, err := io.ReadAll(src)
+		if err != nil {
+			return model.CuisineResponse{}, err
+		}
+
+		hasher := sha256.New()
+		hasher.Write(data)
+		hashValue := hex.EncodeToString(hasher.Sum(nil))
+
+		ext := filepath.Ext(iconFile.Filename)
+
+		img_url := "cuisine_icons/" + hashValue + ext
+
+		dst, err := os.Create("public/cuisine_images/" + img_url)
+		if err != nil {
+			return model.CuisineResponse{}, err
+		}
+
+		defer dst.Close()
+
+		if _, err := dst.Write(data); err != nil {
+			return model.CuisineResponse{}, nil
+		}
+
+		cuisine.IconUrl = &img_url
+	}
+
+	if url != "" {
+		cuisine.URL = url
+	}
+
+	if title != "" {
+		cuisine.Title = title
+	}
+
+	updatedCuisine := model.Cuisine{
+		ID:        cuisine.ID,
+		Title:     cuisine.Title,
+		IconUrl:   cuisine.IconUrl,
+		URL:       cuisine.URL,
+		CreatedAt: cuisine.CreatedAt,
+		UpdatedAt: cuisine.UpdatedAt,
+		User:      cuisine.User,
+		UserId:    cuisine.UserId,
+	}
+	//log.Print(updatedCuisine)
+
+	if err := cu.cr.SettingCuisine(&updatedCuisine); err != nil {
 		return model.CuisineResponse{}, err
 	}
 
 	rescuisine := model.CuisineResponse{
 		ID:        cuisine.ID,
 		Title:     cuisine.Title,
-		Image:     cuisine.Image,
+		IconUrl:   cuisine.IconUrl,
 		URL:       cuisine.URL,
 		CreatedAt: cuisine.CreatedAt,
 		UpdatedAt: cuisine.UpdatedAt,
 		UserId:    cuisine.UserId,
 	}
-	log.Print(rescuisine)
+	//log.Print(rescuisine)
 	return rescuisine, nil
 }
-
-// func (cu *cuisineUsecase) AddURL(cuisine model.Cuisine, userId uint, cuisineId uint) (model.CuisineResponse, error) {
-// 	if err := cu.cr.AddURL(&cuisine, userId, cuisineId); err != nil {
-// 		return model.CuisineResponse{}, err
-// 	}
-// 	rescuisine := model.CuisineResponse{
-// 		ID:        cuisine.ID,
-// 		Title:     cuisine.Title,
-// 		Image:     cuisine.Image,
-// 		URL:       cuisine.URL,
-// 		CreatedAt: cuisine.CreatedAt,
-// 		UpdatedAt: cuisine.UpdatedAt,
-// 		UserId:    cuisine.UserId,
-// 	}
-// 	return rescuisine, nil
-// }
