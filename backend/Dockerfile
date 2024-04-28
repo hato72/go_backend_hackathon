@@ -14,9 +14,9 @@ COPY . .
 
 EXPOSE 8080
 
-#CMD ["go", "run", "./src"]
+CMD ["go", "run", "./src/main.go"]
 
-CMD ["./src"]
+#CMD ["./src"]
 
 
 
