@@ -15,7 +15,7 @@ func NewDB() *gorm.DB {
 	//err := godotenv.Load(fmt.Sprintf(".env.%s", os.Getenv("GO_ENV")))
 	err := godotenv.Load(fmt.Sprintf(".env.dev"))
 	if err != nil {
-		log.Fatalln(err)
+		log.Print(err)
 	}
 	//}
 	//fmt.Printf("env getting")
