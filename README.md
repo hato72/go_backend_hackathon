@@ -14,7 +14,7 @@ https://free-casquette-dee.notion.site/d558148d80f742a4ac77c0bf76b4a2c9?pvs=4
 
 
 ## 実行方法
-<!--
+<!-- 
 ```sh
 .env.dev:
 
@@ -29,7 +29,7 @@ GO_ENV=dev
 API_DOMAIN=
 ```
 
-.env.devをbackendディレクトリ直下に配置した後に以下を実行
+.env.devをbackendディレクトリ直下に配置した後に以下を実行 -->
 
 ```sh
 docker compose build
@@ -43,12 +43,12 @@ go run src/migrate/migrate.go
 go run src/main.go
 
 ```
--->
-```
+
+<!-- ```
 docker compose run --rm backend sh
 
 go run src/main.go
-```
+``` -->
 
 ## メモ
 dbイメージ　postgres latest 
