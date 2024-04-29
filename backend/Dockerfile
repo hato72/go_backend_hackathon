@@ -1,6 +1,6 @@
 FROM golang:1.22-alpine
 
-#WORKDIR /app/
+WORKDIR /app/
 
 # ローカルの場合
 
@@ -16,22 +16,16 @@ FROM golang:1.22-alpine
 
 #本番環境の場合
 
-WORKDIR /app
-COPY go.mod go.sum main.go ./
-RUN go mod download \
-&& go build -o main /src/main.go
-CMD [ "/app/main" ]
 
+COPY go.mod ./
 
-# COPY go.mod ./
+RUN go mod download
 
-# RUN go mod download
+COPY . .
 
-# COPY . .
+#RUN go build -o main .
 
-# #RUN go build -o main .
+EXPOSE 8080
 
-# EXPOSE 8080
-
-# CMD go run \src\main.go
+CMD ["go","run","./src/main.go"]
 
