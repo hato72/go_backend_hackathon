@@ -12,5 +12,5 @@ COPY ./backend .
 
 EXPOSE 8080
 
-CMD ["go", "run", "backend/src/main.go"]
+CMD ["go", "run", "src/main.go"]
 
