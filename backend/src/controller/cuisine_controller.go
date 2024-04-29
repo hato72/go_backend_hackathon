@@ -3,7 +3,6 @@ package controller
 import (
 	"backend/src/model"
 	"backend/src/usecase"
-	"log"
 	"net/http"
 	"strconv"
 
@@ -129,7 +128,7 @@ func (cc *cuisineController) AddCuisine(c echo.Context) error {
 
 	cuisine := model.Cuisine{}
 	cuisine.UserId = uint(userId.(float64))
-	log.Print(url)
+	//log.Print(url)
 
 	cuisineRes, err := cc.cu.AddCuisine(cuisine, iconFile, url, title)
 	if err != nil {
