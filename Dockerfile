@@ -2,15 +2,15 @@ FROM golang:1.22-alpine
 
 WORKDIR /app/
 
-COPY go.mod .
+COPY backend/go.mod .
 
 RUN go mod download
 
-COPY . .
+COPY ./backend .
 
 #RUN go build -o main .
 
 EXPOSE 8080
 
-CMD ["go", "run", "./src/main.go"]
+CMD ["go", "run", "./backend/src/main.go"]
 
