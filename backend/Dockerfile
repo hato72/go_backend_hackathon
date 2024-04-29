@@ -4,27 +4,27 @@ WORKDIR /app/
 
 # ローカルの場合
 
-COPY backend/go.sum . 
-COPY backend/go.mod .
+# COPY backend/go.sum . 
+# COPY backend/go.mod .
 
-RUN apk upgrade --update && apk --no-cache add git gcc musl-dev
+# RUN apk upgrade --update && apk --no-cache add git gcc musl-dev
 
-COPY ./backend .
+# COPY ./backend .
 
-CMD ["go", "run", "./src"]
+# CMD ["go", "run", "./src"]
 
 
 #本番環境の場合
 
-# COPY go.mod ./
+COPY go.mod ./
 
-# RUN go mod download
+RUN go mod download
 
-# COPY . .
+COPY . .
 
-# #RUN go build -o main .
+#RUN go build -o main .
 
-# EXPOSE 8080
+EXPOSE 8080
 
-#CMD ["go", "run", "./src/main.go"]
+CMD ["go", "run", "./src/main.go"]
 
