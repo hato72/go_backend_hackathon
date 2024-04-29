@@ -20,7 +20,7 @@ COPY go.mod ./
 
 RUN go mod download
 
-COPY ./backend .
+COPY . .
 
 #RUN go build -o main .
 
