@@ -18,20 +18,20 @@ func main() {
 	//migrate
 
 	//ローカル
-	// dbConn := db.NewDB()
-	// defer fmt.Println("Successfully Migrated")
-	// defer db.CloseDB(dbConn)
-	// dbConn.AutoMigrate(&model.User{}, &model.Cuisine{})
-
-	//db := db.NewDB()
-
-	//本番環境
-	dbConn := db.NewPrdDB()
+	dbConn := db.NewDB()
 	defer fmt.Println("Successfully Migrated")
-	defer db.ClosePrdDB(dbConn)
+	defer db.CloseDB(dbConn)
 	dbConn.AutoMigrate(&model.User{}, &model.Cuisine{})
 
-	db := db.NewPrdDB()
+	db := db.NewDB()
+
+	//本番環境
+	// dbConn := db.NewPrdDB()
+	// defer fmt.Println("Successfully Migrated")
+	// defer db.ClosePrdDB(dbConn)
+	// dbConn.AutoMigrate(&model.User{}, &model.Cuisine{})
+
+	// db := db.NewPrdDB()
 
 	userValidator := validator.NewUserValidator()
 	cuisineValidator := validator.NewCuisineValidator()
