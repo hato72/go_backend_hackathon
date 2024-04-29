@@ -13,7 +13,13 @@ import (
 func NewDB() *gorm.DB {
 	//if os.Getenv("GO_ENV") == "dev" {
 	//err := godotenv.Load(fmt.Sprintf(".env.%s", os.Getenv("GO_ENV")))
+
+	//ローカルの場合
 	err := godotenv.Load(fmt.Sprintf(".env.dev"))
+
+	//cloud runの場合
+	//err := godotenv.Load(fmt.Sprintf(".env.prd"))
+
 	if err != nil {
 		log.Print(err)
 	}
