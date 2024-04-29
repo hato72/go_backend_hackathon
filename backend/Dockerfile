@@ -24,7 +24,7 @@ COPY . .
 
 
 #RUN go build -o main .
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o api ./backend/src/main.go
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o api ./src/main.go
 
 EXPOSE 8080
 
