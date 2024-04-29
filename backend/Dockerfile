@@ -22,6 +22,7 @@ RUN go mod download \
 && go build -o main /src/main.go
 CMD [ "/app/main" ]
 
+
 # COPY go.mod ./
 
 # RUN go mod download
