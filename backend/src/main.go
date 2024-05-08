@@ -58,4 +58,5 @@ func main() {
 	})
 
 	//dockerを起動->docker compose build -> docker compose up // -> docker compose run --rm backend sh=> go run src/main.go
+	// docker-compose down -v --rmi local
 }
