@@ -49,7 +49,7 @@ docker compose up
 ## 実行方法(本番環境)
 GCPはうまくできずに断念した
 
-今後は(https://render.com/)を使用する予定
+今後は(https://render.com/) を使用する予定
 
 ## メモ
 dbイメージ　postgres latest 
