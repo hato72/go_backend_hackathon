@@ -51,6 +51,8 @@ GCPはうまくできずに断念した
 
 今後は(https://render.com/) を使用する予定
 
+デプロイ先：https://cookmeet-backend.onrender.com
+
 ## メモ
 dbイメージ　postgres latest 
 
