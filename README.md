@@ -1,13 +1,7 @@
-<!-- ## 基本実行方法
-```sh
-docker compose build
+# CookMeet(サーバー)
 
-//docker compose run --rm backend sh
-
-//go mod tidy 
-
-docker compose up 
-``` -->
+## フロントエンド
+https://github.com/hato72/CookMeet
 
 ## DB設計
 https://free-casquette-dee.notion.site/d558148d80f742a4ac77c0bf76b4a2c9?pvs=4
