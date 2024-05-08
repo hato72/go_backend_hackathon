@@ -1,8 +1,13 @@
 # CookMeet(サーバー)
 ![cookmeet](https://github.com/hato72/go_backend_hackathon/assets/139688965/54235b01-2da0-491e-857c-18581b70b518)
 
+## デプロイ
+https://cookmeet-backend.onrender.com
+
 ## フロントエンド
-https://github.com/hato72/CookMeet
+ソースコード：https://github.com/hato72/CookMeet
+
+デプロイ先：https://cook-meet.vercel.app/
 
 ## DB設計
 https://free-casquette-dee.notion.site/d558148d80f742a4ac77c0bf76b4a2c9?pvs=4
@@ -45,13 +50,6 @@ docker compose build
 
 docker compose up
 ```
-
-## 実行方法(本番環境)
-GCPはうまくできずに断念した
-
-今後は(https://render.com/) を使用する予定
-
-デプロイ先：https://cookmeet-backend.onrender.com
 
 ## メモ
 dbイメージ　postgres latest 
