@@ -1,4 +1,5 @@
 # CookMeet(サーバー)
+![cookmeet](https://github.com/hato72/go_backend_hackathon/assets/139688965/54235b01-2da0-491e-857c-18581b70b518)
 
 ## フロントエンド
 https://github.com/hato72/CookMeet
