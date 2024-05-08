@@ -57,5 +57,5 @@ func main() {
 		return c.JSON(http.StatusOK, "hello world")
 	})
 
-	//dockerを起動->docker compose build -> docker compose up -> bashでgo run src/main.go
+	//dockerを起動->docker compose build -> docker compose up // -> docker compose run --rm backend sh=> go run src/main.go
 }
