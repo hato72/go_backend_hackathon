@@ -1,4 +1,5 @@
-module backend
+//module backend
+module github.com/hato72/go_backend_hackathon
 
 go 1.22
 
