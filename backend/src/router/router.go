@@ -1,9 +1,11 @@
 package router
 
 import (
-	"backend/src/controller"
+	//"backend/src/controller"
 	"net/http"
 	"os"
+
+	"github.com/hato72/go_backend_hackathon/backend/src/controller"
 
 	echojwt "github.com/labstack/echo-jwt/v4"
 	"github.com/labstack/echo/v4"

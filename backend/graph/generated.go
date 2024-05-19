@@ -3,7 +3,8 @@
 package graph
 
 import (
-	"backend/graph/model"
+	//"backend/graph/model"
+	"github.com/hato72/go_backend_hackathon/backend/graph/model"
 	"bytes"
 	"context"
 	"embed"

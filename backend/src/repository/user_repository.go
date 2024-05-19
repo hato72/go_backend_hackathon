@@ -1,8 +1,8 @@
 package repository
 
 import (
-	"backend/src/model"
-
+	//"backend/src/model"
+	"github.com/hato72/go_backend_hackathon/backend/src/model"
 	"gorm.io/gorm"
 )
 

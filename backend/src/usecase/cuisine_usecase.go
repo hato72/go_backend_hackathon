@@ -1,15 +1,19 @@
 package usecase
 
 import (
-	"backend/src/model"
-	"backend/src/repository"
-	"backend/src/validator"
+	// "backend/src/model"
+	// "backend/src/repository"
+	// "backend/src/validator"
 	"crypto/sha256"
 	"encoding/hex"
 	"io"
 	"mime/multipart"
 	"os"
 	"path/filepath"
+
+	"github.com/hato72/go_backend_hackathon/backend/src/model"
+	"github.com/hato72/go_backend_hackathon/backend/src/repository"
+	"github.com/hato72/go_backend_hackathon/backend/src/validator"
 )
 
 type ICuisineUsecase interface {

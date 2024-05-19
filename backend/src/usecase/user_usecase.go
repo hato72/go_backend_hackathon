@@ -1,9 +1,9 @@
 package usecase
 
 import (
-	"backend/src/model"
-	"backend/src/repository"
-	"backend/src/validator"
+	// "backend/src/model"
+	// "backend/src/repository"
+	// "backend/src/validator"
 	"crypto/sha256"
 	"encoding/hex"
 	"io"
@@ -11,6 +11,10 @@ import (
 	"os"
 	"path/filepath"
 	"time"
+
+	"github.com/hato72/go_backend_hackathon/backend/src/model"
+	"github.com/hato72/go_backend_hackathon/backend/src/repository"
+	"github.com/hato72/go_backend_hackathon/backend/src/validator"
 
 	"github.com/golang-jwt/jwt/v5"
 	"golang.org/x/crypto/bcrypt"

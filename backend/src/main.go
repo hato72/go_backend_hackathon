@@ -1,18 +1,22 @@
 package main
 
 import (
-	"backend/src/controller"
-	"backend/src/db"
-	"backend/src/model"
-	"backend/src/repository"
-	"backend/src/router"
-	"backend/src/usecase"
-	"backend/src/validator"
 	"fmt"
 	"net/http"
 
-	// "github.com/hato72/go_backend_hackathon/backend/generated"
-	// "github.com/hato72/go_backend_hackathon/backend/graph"
+	"github.com/hato72/go_backend_hackathon/backend/src/controller"
+	"github.com/hato72/go_backend_hackathon/backend/src/db"
+	"github.com/hato72/go_backend_hackathon/backend/src/model"
+	"github.com/hato72/go_backend_hackathon/backend/src/repository"
+	"github.com/hato72/go_backend_hackathon/backend/src/router"
+	"github.com/hato72/go_backend_hackathon/backend/src/usecase"
+	"github.com/hato72/go_backend_hackathon/backend/src/validator"
+
+	"github.com/99designs/gqlgen/graphql/handler"
+	"github.com/99designs/gqlgen/graphql/playground"
+	"github.com/hato72/go_backend_hackathon/backend/graph"
+
+	"github.com/hato72/go_backend_hackathon/backend/graph/generated"
 	"github.com/labstack/echo/v4"
 )
 
@@ -55,22 +59,22 @@ func main() {
 	e := router.NewRouter(userController, cuisineController)
 	//e := router.NewRouter(userController)
 
-	// graphqlHandler := handler.NewDefaultServer(
-	// 	generated.NewExecutableSchema(
-	// 		generated.Config{Resolvers: &graph.Resolver{DB: db}},
-	// 	),
-	// )
-	// playgroundHandler := playground.Handler("GraphQL", "/query")
+	graphqlHandler := handler.NewDefaultServer(
+		generated.NewExecutableSchema(
+			generated.Config{Resolvers: &graph.Resolver{db: db}},
+		),
+	)
+	playgroundHandler := playground.Handler("GraphQL", "/query")
 
-	// e.POST("/query", func(c echo.Context) error {
-	// 	graphqlHandler.ServeHTTP(c.Response(), c.Request())
-	// 	return nil
-	// })
+	e.POST("/query", func(c echo.Context) error {
+		graphqlHandler.ServeHTTP(c.Response(), c.Request())
+		return nil
+	})
 
-	// e.GET("/playground", func(c echo.Context) error {
-	// 	playgroundHandler.ServeHTTP(c.Response(), c.Request())
-	// 	return nil
-	// })
+	e.GET("/playground", func(c echo.Context) error {
+		playgroundHandler.ServeHTTP(c.Response(), c.Request())
+		return nil
+	})
 
 	e.Logger.Fatal(e.Start(":8080")) //サーバー起動
 	e.GET("/", func(c echo.Context) error {

@@ -1,11 +1,14 @@
 package controller
 
 import (
-	"backend/src/model"
-	"backend/src/usecase"
+	// "backend/src/model"
+	// "backend/src/usecase"
 	"net/http"
 	"os"
 	"time"
+
+	"github.com/hato72/go_backend_hackathon/backend/src/model"
+	"github.com/hato72/go_backend_hackathon/backend/src/usecase"
 
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/labstack/echo/v4"
