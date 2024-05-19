@@ -8,6 +8,7 @@ import (
 	"backend/graph/model"
 	"context"
 	"fmt"
+	"time"
 )
 
 // CreateUser is the resolver for the createUser field.
@@ -25,11 +26,15 @@ func (r *mutationResolver) CreateUser(ctx context.Context, input model.UserInput
 
 // CreateCuisine is the resolver for the createCuisine field.
 func (r *mutationResolver) CreateCuisine(ctx context.Context, input *model.CuisineInput) (*model.Cuisine, error) {
+	timestamp := time.Now().Format("2006-01-02 15:04:05")
+
 	cuisine := &model.Cuisine{
-		Title:   input.Title,
-		IconURL: input.IconURL,
-		URL:     input.URL,
-		UserID:  input.UserID,
+		Title:     input.Title,
+		IconURL:   input.IconURL,
+		URL:       input.URL,
+		CreatedAt: timestamp,
+		UpdatedAt: timestamp,
+		UserID:    input.UserID,
 	}
 	r.db.Create(cuisine)
 	return cuisine, nil
@@ -37,7 +42,12 @@ func (r *mutationResolver) CreateCuisine(ctx context.Context, input *model.Cuisi
 
 // Users is the resolver for the users field.
 func (r *queryResolver) Users(ctx context.Context) ([]*model.User, error) {
-	panic(fmt.Errorf("not implemented: Users - users"))
+	user := &model.User{
+		Name:     "kota",
+		Email:    "sample@test.com",
+		Password: "pass",
+	}
+	return []*model.User{user}, nil
 }
 
 // Cuisines is the resolver for the cuisines field.
