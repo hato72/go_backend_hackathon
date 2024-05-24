@@ -3,8 +3,6 @@
 package graph
 
 import (
-	//"backend/graph/model"
-	"github.com/hato72/go_backend_hackathon/backend/graph/model"
 	"bytes"
 	"context"
 	"embed"
@@ -16,6 +14,7 @@ import (
 
 	"github.com/99designs/gqlgen/graphql"
 	"github.com/99designs/gqlgen/graphql/introspection"
+	"github.com/hato72/go_backend_hackathon/backend/graph/model"
 	gqlparser "github.com/vektah/gqlparser/v2"
 	"github.com/vektah/gqlparser/v2/ast"
 )
@@ -367,7 +366,7 @@ func (ec *executionContext) field_Mutation_createCuisine_args(ctx context.Contex
 	var arg0 *model.CuisineInput
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg0, err = ec.unmarshalOCuisineInput2ᚖbackendᚋgraphᚋmodelᚐCuisineInput(ctx, tmp)
+		arg0, err = ec.unmarshalOCuisineInput2ᚖgithubᚗcomᚋhato72ᚋgo_backend_hackathonᚋbackendᚋgraphᚋmodelᚐCuisineInput(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -382,7 +381,7 @@ func (ec *executionContext) field_Mutation_createUser_args(ctx context.Context, 
 	var arg0 model.UserInput
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg0, err = ec.unmarshalNUserInput2backendᚋgraphᚋmodelᚐUserInput(ctx, tmp)
+		arg0, err = ec.unmarshalNUserInput2githubᚗcomᚋhato72ᚋgo_backend_hackathonᚋbackendᚋgraphᚋmodelᚐUserInput(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -733,7 +732,7 @@ func (ec *executionContext) _Cuisine_user(ctx context.Context, field graphql.Col
 	}
 	res := resTmp.(*model.User)
 	fc.Result = res
-	return ec.marshalNUser2ᚖbackendᚋgraphᚋmodelᚐUser(ctx, field.Selections, res)
+	return ec.marshalNUser2ᚖgithubᚗcomᚋhato72ᚋgo_backend_hackathonᚋbackendᚋgraphᚋmodelᚐUser(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Cuisine_user(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -833,7 +832,7 @@ func (ec *executionContext) _Mutation_createUser(ctx context.Context, field grap
 	}
 	res := resTmp.(*model.User)
 	fc.Result = res
-	return ec.marshalNUser2ᚖbackendᚋgraphᚋmodelᚐUser(ctx, field.Selections, res)
+	return ec.marshalNUser2ᚖgithubᚗcomᚋhato72ᚋgo_backend_hackathonᚋbackendᚋgraphᚋmodelᚐUser(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_createUser(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -900,7 +899,7 @@ func (ec *executionContext) _Mutation_createCuisine(ctx context.Context, field g
 	}
 	res := resTmp.(*model.Cuisine)
 	fc.Result = res
-	return ec.marshalNCuisine2ᚖbackendᚋgraphᚋmodelᚐCuisine(ctx, field.Selections, res)
+	return ec.marshalNCuisine2ᚖgithubᚗcomᚋhato72ᚋgo_backend_hackathonᚋbackendᚋgraphᚋmodelᚐCuisine(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_createCuisine(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -973,7 +972,7 @@ func (ec *executionContext) _Query_users(ctx context.Context, field graphql.Coll
 	}
 	res := resTmp.([]*model.User)
 	fc.Result = res
-	return ec.marshalNUser2ᚕᚖbackendᚋgraphᚋmodelᚐUserᚄ(ctx, field.Selections, res)
+	return ec.marshalNUser2ᚕᚖgithubᚗcomᚋhato72ᚋgo_backend_hackathonᚋbackendᚋgraphᚋmodelᚐUserᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_users(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -1029,7 +1028,7 @@ func (ec *executionContext) _Query_cuisines(ctx context.Context, field graphql.C
 	}
 	res := resTmp.([]*model.Cuisine)
 	fc.Result = res
-	return ec.marshalNCuisine2ᚕᚖbackendᚋgraphᚋmodelᚐCuisineᚄ(ctx, field.Selections, res)
+	return ec.marshalNCuisine2ᚕᚖgithubᚗcomᚋhato72ᚋgo_backend_hackathonᚋbackendᚋgraphᚋmodelᚐCuisineᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_cuisines(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -3904,11 +3903,11 @@ func (ec *executionContext) marshalNBoolean2bool(ctx context.Context, sel ast.Se
 	return res
 }
 
-func (ec *executionContext) marshalNCuisine2backendᚋgraphᚋmodelᚐCuisine(ctx context.Context, sel ast.SelectionSet, v model.Cuisine) graphql.Marshaler {
+func (ec *executionContext) marshalNCuisine2githubᚗcomᚋhato72ᚋgo_backend_hackathonᚋbackendᚋgraphᚋmodelᚐCuisine(ctx context.Context, sel ast.SelectionSet, v model.Cuisine) graphql.Marshaler {
 	return ec._Cuisine(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNCuisine2ᚕᚖbackendᚋgraphᚋmodelᚐCuisineᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.Cuisine) graphql.Marshaler {
+func (ec *executionContext) marshalNCuisine2ᚕᚖgithubᚗcomᚋhato72ᚋgo_backend_hackathonᚋbackendᚋgraphᚋmodelᚐCuisineᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.Cuisine) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -3932,7 +3931,7 @@ func (ec *executionContext) marshalNCuisine2ᚕᚖbackendᚋgraphᚋmodelᚐCuis
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNCuisine2ᚖbackendᚋgraphᚋmodelᚐCuisine(ctx, sel, v[i])
+			ret[i] = ec.marshalNCuisine2ᚖgithubᚗcomᚋhato72ᚋgo_backend_hackathonᚋbackendᚋgraphᚋmodelᚐCuisine(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -3952,7 +3951,7 @@ func (ec *executionContext) marshalNCuisine2ᚕᚖbackendᚋgraphᚋmodelᚐCuis
 	return ret
 }
 
-func (ec *executionContext) marshalNCuisine2ᚖbackendᚋgraphᚋmodelᚐCuisine(ctx context.Context, sel ast.SelectionSet, v *model.Cuisine) graphql.Marshaler {
+func (ec *executionContext) marshalNCuisine2ᚖgithubᚗcomᚋhato72ᚋgo_backend_hackathonᚋbackendᚋgraphᚋmodelᚐCuisine(ctx context.Context, sel ast.SelectionSet, v *model.Cuisine) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
@@ -4007,11 +4006,11 @@ func (ec *executionContext) marshalNString2string(ctx context.Context, sel ast.S
 	return res
 }
 
-func (ec *executionContext) marshalNUser2backendᚋgraphᚋmodelᚐUser(ctx context.Context, sel ast.SelectionSet, v model.User) graphql.Marshaler {
+func (ec *executionContext) marshalNUser2githubᚗcomᚋhato72ᚋgo_backend_hackathonᚋbackendᚋgraphᚋmodelᚐUser(ctx context.Context, sel ast.SelectionSet, v model.User) graphql.Marshaler {
 	return ec._User(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNUser2ᚕᚖbackendᚋgraphᚋmodelᚐUserᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.User) graphql.Marshaler {
+func (ec *executionContext) marshalNUser2ᚕᚖgithubᚗcomᚋhato72ᚋgo_backend_hackathonᚋbackendᚋgraphᚋmodelᚐUserᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.User) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -4035,7 +4034,7 @@ func (ec *executionContext) marshalNUser2ᚕᚖbackendᚋgraphᚋmodelᚐUserᚄ
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNUser2ᚖbackendᚋgraphᚋmodelᚐUser(ctx, sel, v[i])
+			ret[i] = ec.marshalNUser2ᚖgithubᚗcomᚋhato72ᚋgo_backend_hackathonᚋbackendᚋgraphᚋmodelᚐUser(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -4055,7 +4054,7 @@ func (ec *executionContext) marshalNUser2ᚕᚖbackendᚋgraphᚋmodelᚐUserᚄ
 	return ret
 }
 
-func (ec *executionContext) marshalNUser2ᚖbackendᚋgraphᚋmodelᚐUser(ctx context.Context, sel ast.SelectionSet, v *model.User) graphql.Marshaler {
+func (ec *executionContext) marshalNUser2ᚖgithubᚗcomᚋhato72ᚋgo_backend_hackathonᚋbackendᚋgraphᚋmodelᚐUser(ctx context.Context, sel ast.SelectionSet, v *model.User) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
@@ -4065,7 +4064,7 @@ func (ec *executionContext) marshalNUser2ᚖbackendᚋgraphᚋmodelᚐUser(ctx c
 	return ec._User(ctx, sel, v)
 }
 
-func (ec *executionContext) unmarshalNUserInput2backendᚋgraphᚋmodelᚐUserInput(ctx context.Context, v interface{}) (model.UserInput, error) {
+func (ec *executionContext) unmarshalNUserInput2githubᚗcomᚋhato72ᚋgo_backend_hackathonᚋbackendᚋgraphᚋmodelᚐUserInput(ctx context.Context, v interface{}) (model.UserInput, error) {
 	res, err := ec.unmarshalInputUserInput(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
@@ -4349,7 +4348,7 @@ func (ec *executionContext) marshalOBoolean2ᚖbool(ctx context.Context, sel ast
 	return res
 }
 
-func (ec *executionContext) unmarshalOCuisineInput2ᚖbackendᚋgraphᚋmodelᚐCuisineInput(ctx context.Context, v interface{}) (*model.CuisineInput, error) {
+func (ec *executionContext) unmarshalOCuisineInput2ᚖgithubᚗcomᚋhato72ᚋgo_backend_hackathonᚋbackendᚋgraphᚋmodelᚐCuisineInput(ctx context.Context, v interface{}) (*model.CuisineInput, error) {
 	if v == nil {
 		return nil, nil
 	}

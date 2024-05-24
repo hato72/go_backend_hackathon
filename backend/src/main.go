@@ -16,7 +16,7 @@ import (
 	"github.com/99designs/gqlgen/graphql/playground"
 	"github.com/hato72/go_backend_hackathon/backend/graph"
 
-	"github.com/hato72/go_backend_hackathon/backend/graph/generated"
+	//"github.com/hato72/go_backend_hackathon/backend/graph/generated"
 	"github.com/labstack/echo/v4"
 )
 
