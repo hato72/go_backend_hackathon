@@ -55,9 +55,9 @@ func main() {
 	//e := router.NewRouter(userController)
 
 	port := os.Getenv("PORT")
-	if port == "" {
-		port = "8080"
-	}
+	// if port == "" {
+	// 	port = "8080"
+	// }
 
 	e.Logger.Fatal(e.Start(":" + port)) //サーバー起動
 	e.GET("/", func(c echo.Context) error {
