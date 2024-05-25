@@ -11,6 +11,8 @@ RUN apk upgrade --update && apk --no-cache add git gcc musl-dev
 
 COPY ./backend .
 
+EXPOSE 8080
+
 CMD ["go", "run", "./src"]
 
 
