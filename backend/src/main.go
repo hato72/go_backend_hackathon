@@ -10,7 +10,6 @@ import (
 	"backend/src/validator"
 	"fmt"
 	"net/http"
-	"os"
 
 	"github.com/labstack/echo/v4"
 )
@@ -54,12 +53,7 @@ func main() {
 	e := router.NewRouter(userController, cuisineController)
 	//e := router.NewRouter(userController)
 
-	port := os.Getenv("PORT")
-	// if port == "" {
-	// 	port = "8080"
-	// }
-
-	e.Logger.Fatal(e.Start(":" + port)) //サーバー起動
+	e.Logger.Fatal(e.Start(":8080")) //サーバー起動
 	e.GET("/", func(c echo.Context) error {
 		return c.JSON(http.StatusOK, "hello")
 	})
