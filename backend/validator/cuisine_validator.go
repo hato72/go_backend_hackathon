@@ -1,7 +1,7 @@
 package validator
 
 import (
-	"backend/src/model"
+	"backend/model"
 
 	validation "github.com/go-ozzo/ozzo-validation/v4"
 )

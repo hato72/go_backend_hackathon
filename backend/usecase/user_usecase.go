@@ -1,9 +1,9 @@
 package usecase
 
 import (
-	"backend/src/model"
-	"backend/src/repository"
-	"backend/src/validator"
+	"backend/model"
+	"backend/repository"
+	"backend/validator"
 	"crypto/sha256"
 	"encoding/hex"
 	"io"

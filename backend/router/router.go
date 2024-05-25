@@ -1,7 +1,7 @@
 package router
 
 import (
-	"backend/src/controller"
+	"backend/controller"
 	"net/http"
 	"os"
 

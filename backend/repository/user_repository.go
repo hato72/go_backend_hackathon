@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"backend/src/model"
+	"backend/model"
 
 	"gorm.io/gorm"
 )

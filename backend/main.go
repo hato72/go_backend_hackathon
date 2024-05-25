@@ -1,13 +1,13 @@
 package main
 
 import (
-	"backend/src/controller"
-	"backend/src/db"
-	"backend/src/model"
-	"backend/src/repository"
-	"backend/src/router"
-	"backend/src/usecase"
-	"backend/src/validator"
+	"backend/controller"
+	"backend/db"
+	"backend/model"
+	"backend/repository"
+	"backend/router"
+	"backend/usecase"
+	"backend/validator"
 	"fmt"
 	"log"
 	"os"

@@ -1,8 +1,8 @@
 package controller
 
 import (
-	"backend/src/model"
-	"backend/src/usecase"
+	"backend/model"
+	"backend/usecase"
 	"net/http"
 	"os"
 	"time"
