@@ -9,9 +9,8 @@ import (
 	"backend/src/usecase"
 	"backend/src/validator"
 	"fmt"
-	"net/http"
-
-	"github.com/labstack/echo/v4"
+	"log"
+	"os"
 )
 
 func main() {
@@ -53,10 +52,18 @@ func main() {
 	e := router.NewRouter(userController, cuisineController)
 	//e := router.NewRouter(userController)
 
-	e.Logger.Fatal(e.Start(":8080")) //サーバー起動
-	e.GET("/", func(c echo.Context) error {
-		return c.JSON(http.StatusOK, "hello")
-	})
+	// e.Logger.Fatal(e.Start(":8080")) //サーバー起動
+	// e.GET("/", func(c echo.Context) error {
+	// 	return c.JSON(http.StatusOK, "hello")
+	// })
+
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+	if err := e.Start(":" + port); err != nil {
+		log.Panicf("error: %s", err)
+	}
 
 	//dockerを起動->docker compose build -> docker compose up // -> docker compose run --rm backend sh=> go run src/main.go
 	// docker-compose down -v --rmi local
