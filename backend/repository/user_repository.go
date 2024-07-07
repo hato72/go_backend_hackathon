@@ -1,5 +1,7 @@
 package repository
 
+//emailでのユーザー検索、ユーザーテーブルの作成、ユーザーテーブルの更新処理を実装
+
 import (
 	"backend/model"
 

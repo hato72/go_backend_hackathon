@@ -1,5 +1,11 @@
 package repository
 
+//GetAllCuisines:料理データベースの一覧から引数のユーザーidに一致する料理を取得する
+//GetCuisineById:引数のユーザーidに一致する料理を取得し、その中でcuisineの主キーが引数で受け取ったcuisineIdに一致する料理を取得する
+//CreateCuisine:料理を作成する
+//DeleteCuisine:料理を削除する
+//SettingCuisine:料理を更新する
+
 import (
 	"backend/model"
 	"fmt"
@@ -9,11 +15,11 @@ import (
 )
 
 type ICuisineRepository interface {
-	GetAllCuisines(cuisines *[]model.Cuisine, userId uint) error              //作成したタスクの一覧を取得
-	GetCuisineById(cuisine *model.Cuisine, userId uint, cuisineId uint) error //引数のcuisineIdに一致するタスクを返す
-	CreateCuisine(cuisine *model.Cuisine) error                               //タスクの新規作成
-	//UpdateCuisine(cuisine *model.Cuisine, userId uint, cuisineId uint) error  //タスクの更新
-	DeleteCuisine(userId uint, cuisineId uint) error //タスクの削除
+	GetAllCuisines(cuisines *[]model.Cuisine, userId uint) error              //作成した料理の一覧を取得
+	GetCuisineById(cuisine *model.Cuisine, userId uint, cuisineId uint) error //引数のcuisineIdに一致する料理を返す
+	CreateCuisine(cuisine *model.Cuisine) error                               //料理の新規作成
+	//UpdateCuisine(cuisine *model.Cuisine, userId uint, cuisineId uint) error  //料理の更新
+	DeleteCuisine(userId uint, cuisineId uint) error //料理の削除
 	SettingCuisine(cuisine *model.Cuisine) error
 }
 
@@ -26,14 +32,14 @@ func NewCuisineRepository(db *gorm.DB) ICuisineRepository { //コンストラク
 }
 
 func (cr *cuisineRepository) GetAllCuisines(cuisines *[]model.Cuisine, userId uint) error {
-	if err := cr.db.Joins("User").Where("user_id=?", userId).Order("created_at").Find(cuisines).Error; err != nil { //タスクの一覧から引数のユーザーidに一致するタスクを取得する　その時、作成日時があたらしいものが末尾に来るようにする
+	if err := cr.db.Joins("User").Where("user_id=?", userId).Order("created_at").Find(cuisines).Error; err != nil { //料理の一覧から引数のユーザーidに一致する料理を取得する　その時、作成日時があたらしいものが末尾に来るようにする
 		return err
 	}
 	return nil
 }
 
 func (cr *cuisineRepository) GetCuisineById(cuisine *model.Cuisine, userId uint, cuisineId uint) error {
-	if err := cr.db.Joins("User").Where("user_id=?", userId).Find(cuisine, cuisineId).Error; err != nil { //引数のユーザーidに一致するタスクを取得し、その中でcuisineの主キーが引数で受け取ったcuisineIdに一致するタスクを取得する
+	if err := cr.db.Joins("User").Where("user_id=?", userId).Find(cuisine, cuisineId).Error; err != nil { //引数のユーザーidに一致する料理を取得し、その中でcuisineの主キーが引数で受け取ったcuisineIdに一致する料理を取得する
 		return err
 	}
 	return nil
