@@ -1,5 +1,8 @@
 package controller
 
+//user_usecaseで実装したユーザー登録、ログイン、ログアウト、ユーザー情報更新メソッドを呼び出す
+//このプログラムの処理が一番外側に位置し、routerでAPIとして呼び出される
+
 import (
 	"backend/model"
 	"backend/usecase"

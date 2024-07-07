@@ -1,5 +1,12 @@
 package controller
 
+//GetAllCuisines: cuisine_usecaseの同メソッドを呼び出している
+//GetCuisineById:cuisine_usecaseの同メソッドを呼び出している
+//DeleteCuisine:料理を削除している
+//AddCuisine:cuisine_usecaseの同メソッドを呼び出している
+//SetCuisine:cuisine_usecaseのgetAllcuisinesメソッドで料理を取得したのち、同メソッドを呼び出している
+//このプログラムが一番外側であり、routerで呼び出される
+
 import (
 	"backend/model"
 	"backend/usecase"
