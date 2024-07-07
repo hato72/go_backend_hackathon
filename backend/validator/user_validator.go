@@ -1,5 +1,7 @@
 package validator
 
+//ログイン等のフォームにemailまたはパスワードが入力されていないもしくは正しい形式でない場合のバリデーションを行っている
+
 import (
 	"backend/model"
 
