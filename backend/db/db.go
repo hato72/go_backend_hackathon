@@ -1,5 +1,7 @@
 package db
 
+//dbへの接続
+
 import (
 	"fmt"
 	"log"

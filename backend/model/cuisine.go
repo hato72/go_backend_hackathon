@@ -9,7 +9,7 @@ type Cuisine struct {
 	URL       string    `json:"url"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
-	User      User      `json:"user" gorm:"foreignKey:UserId; constraint:OnDelete:CASCADE"` //userを削除したときにuserに紐づいているタスクも消去される
+	User      User      `json:"user" gorm:"foreignKey:UserId; constraint:OnDelete:CASCADE"` //userを削除したときにuserに紐づいている料理も消去される
 	UserId    uint      `json:"user_id" gorm:"not null"`
 }
 
