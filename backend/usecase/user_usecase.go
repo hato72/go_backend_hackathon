@@ -1,5 +1,10 @@
 package usecase
 
+//サインアップ、ログイン、更新処理を実装
+//サインアップでは、user_validatorを呼び出したのち、user_repositoryのユーザーテーブル作成メソッドを呼び出している
+//ログインでは、user_repositoryのemailでのユーザー検索メソッドを呼び出したのち、jwtトークンの検証を行っている
+//更新処理では、更新情報があればデータの更新を行っている
+
 import (
 	"backend/model"
 	"backend/repository"

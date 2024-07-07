@@ -1,5 +1,9 @@
 package usecase
 
+//全ての料理履歴を取得するGetAllCuisines、指定したIDに一致する料理を取得するGetCuisineById、
+//料理を削除するDeleteCuisine、料理を追加するAddCuisine、料理を更新するSetCuisineを実装している
+//それぞれcuisine_repositoryのメソッドを呼び出している
+
 import (
 	"backend/model"
 	"backend/repository"
